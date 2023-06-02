@@ -2,6 +2,8 @@ class AirTableApi
   API_KEY = ENV.fetch("AIRTABLE_API_KEY", Rails.application.credentials.airtable_api_key).freeze
   BASE_URL = "https://api.airtable.com/v0".freeze
 
+  require "net/http"
+
   def self.data_for(path, query: {})
     new(path, query:).data
   end
