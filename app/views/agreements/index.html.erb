@@ -1,8 +1,8 @@
-<h1>Agreements</h1>
-<ul>
+<h1 class="govuk-heading-l">Agreements</h1>
+<ul class="govuk-list">
 <% @agreements.each do |agreement| %>
   <li>
-    <%= link_to agreement.name, agreement %>
+    <%= link_to agreement.name, agreement, class: "govuk-link" %>
   </li>
 <% end %>
 </ul>

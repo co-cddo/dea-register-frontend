@@ -1,8 +1,10 @@
-<h1><%= @agreement.name %></h1>
+<h1 class="govuk-heading-l"><%= @agreement.name %></h1>
 
-<dl>
-<% @agreement.fields.each do |key, value| %>
-  <dt><%= key.humanize %></dt>
-  <dd><%= value %></dd>
-<% end %>
+<dl class="govuk-summary-list">
+  <% @agreement.fields.each do |key, value| %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key"><%= key.humanize %></dt>
+      <dd class="govuk-summary-list__value"><%= value %></dd>
+    </div>
+  <% end %>
 </dl>
