@@ -1,0 +1,8 @@
+<h1>Agreements</h1>
+<ul>
+<% @agreements.each do |agreement| %>
+  <li>
+    <%= link_to agreement.name, agreement %>
+  </li>
+<% end %>
+</ul>

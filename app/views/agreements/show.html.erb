@@ -1,0 +1,8 @@
+<h1><%= @agreement.name %></h1>
+
+<dl>
+<% @agreement.fields.each do |key, value| %>
+  <dt><%= key.humanize %></dt>
+  <dd><%= value %></dd>
+<% end %>
+</dl>
