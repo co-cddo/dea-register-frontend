@@ -277,6 +277,7 @@ DEPENDENCIES
   govuk-components
   govuk_design_system_formbuilder
   jsbundling-rails
+  pagy (~> 6.0)
   pg (~> 1.1)
   propshaft
   puma (~> 5.0)
