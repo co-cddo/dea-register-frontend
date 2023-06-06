@@ -12,7 +12,7 @@
 
   <body>
     <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
-    <%= render 'layouts/header' %>
+    <%= govuk_header(service_name: "DEA Register") %>
 
     <div class="govuk-width-container ">
       <%= govuk_phase_banner(
@@ -30,6 +30,6 @@
         </div>
       </main>
     </div>
-    <%= render "layouts/footer" %>
+    <%= govuk_footer %>
   </body>
 </html>
