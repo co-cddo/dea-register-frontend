@@ -28,5 +28,16 @@ RSpec.describe AirTableApi, type: :service do
         expect(described_class.data_for(path, query:)).to eq(payload)
       end
     end
+
+    context "with error" do
+      let(:error) { Faker::Lorem.sentence }
+      let(:payload) do
+        { error: }
+      end
+
+      it "raises an error" do
+        expect { described_class.data_for(path) }.to raise_error(AirTableApi::RequestError)
+      end
+    end
   end
 end

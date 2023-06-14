@@ -1,9 +1,13 @@
 class AirTable < ApplicationRecord
   extend AirTablePopulate
 
-  def self.populate
-    raise "Cannot run on root class - AirTable" if self == AirTable
+  class << self
+    attr_accessor :air_table_name
 
-    populate_from_air_table(self)
+    def populate
+      raise "Cannot run on root class - AirTable" if self == AirTable
+
+      populate_from_air_table(self, air_table_name)
+    end
   end
 end

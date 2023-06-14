@@ -1,10 +1,14 @@
 require "rails_helper"
 
-RSpec.describe Power, type: :model do
+RSpec.describe Agreement, type: :model do
   describe ".populate" do
     subject(:populate) { described_class.populate }
-    let!(:air_table_base) { create(:air_table_base) } # make sure a base exists to avoid callout for base
-    let(:base_id) { AirTableBase.default.base_id }
+    # make sure a base exists to avoid callout for base
+    let!(:air_table_base) { create :air_table_base }
+    let(:base_id) { AirTableBase.base_id }
+    # There needs to be an air table table object to look up the table id
+    let(:air_table_table) { create :air_table_table, name: Agreement.air_table_name }
+    let(:table_id) { air_table_table.record_id }
     let(:name) { Faker::Name.name }
     let(:fields) do
       {
@@ -23,7 +27,7 @@ RSpec.describe Power, type: :model do
     end
 
     before do
-      expect(AirTableApi).to receive(:data_for).with("#{base_id}/power", query: {}).and_return(data)
+      expect(AirTableApi).to receive(:data_for).with("#{base_id}/#{table_id}", query: {}).and_return(data)
     end
 
     it "creates a new record" do
@@ -55,7 +59,7 @@ RSpec.describe Power, type: :model do
         }
       end
       before do
-        expect(AirTableApi).to receive(:data_for).with("#{base_id}/power", query: { offset: }).and_return(offset_data)
+        expect(AirTableApi).to receive(:data_for).with("#{base_id}/#{table_id}", query: { offset: }).and_return(offset_data)
       end
 
       it "creates records from two calls" do
