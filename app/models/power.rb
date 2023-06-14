@@ -1,2 +1,0 @@
-class Power < AirTable
-end

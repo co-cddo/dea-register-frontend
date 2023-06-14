@@ -2,10 +2,12 @@ class AirTableApi
   API_KEY = ENV.fetch("AIRTABLE_API_KEY", Rails.application.credentials.airtable_api_key).freeze
   BASE_URL = "https://api.airtable.com/v0".freeze
 
+  RequestError = Class.new(StandardError)
+
   require "net/http"
 
   def self.data_for(path, query: {})
-    new(path, query:).data
+    new(path, query:).output
   end
 
   def initialize(path, query: {})
@@ -13,13 +15,19 @@ class AirTableApi
     @query = query
   end
 
-  def data
-    @data ||= JSON.parse(response, symbolize_names: true)
+  def output
+    return data if data[:error].blank?
+
+    raise RequestError, "GET #{uri} returns error: #{data[:error]}"
   end
 
 private
 
   attr_reader :path, :query
+
+  def data
+    @data ||= JSON.parse(response, symbolize_names: true)
+  end
 
   def response
     uri.query = query.to_param if query.present?

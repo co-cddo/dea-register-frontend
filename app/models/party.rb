@@ -1,2 +1,0 @@
-class Party < AirTable
-end

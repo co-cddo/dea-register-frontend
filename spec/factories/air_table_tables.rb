@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :power do
-    name { Faker::Company.industry }
+  factory :air_table_table do
+    name { Faker::Company.name }
     record_id { SecureRandom.uuid }
   end
 end
