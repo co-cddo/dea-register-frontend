@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   root "agreements#index"
 
   resources :agreements, only: [:show]
+  resources :powers, only: %i[index show]
 end

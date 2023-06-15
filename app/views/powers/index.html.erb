@@ -1,0 +1,9 @@
+<h1 class="govuk-heading-l">Powers</h1>
+
+<ul class="govuk-list">
+<% @powers.each do |power| %>
+  <li>
+    <%= link_to power.name, power, class: "govuk-link" %>
+  </li>
+<% end %>
+</ul>
