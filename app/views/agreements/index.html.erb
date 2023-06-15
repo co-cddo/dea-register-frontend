@@ -1,10 +1,24 @@
 <h1 class="govuk-heading-l">Agreements</h1>
-<ul class="govuk-list">
-<% @agreements.each do |agreement| %>
-  <li>
-    <%= link_to agreement.name, agreement, class: "govuk-link" %>
-  </li>
+<%= form_tag root_path, method: :get do %>
+  <%= text_field_tag(
+        :q,
+        params[:q],
+        aria: { label: 'Search query input'},
+        class: "govuk-input govuk-!-width-two-thirds"
+      ) %>
+  <%= submit_tag 'Search', class: "govuk-button" %>
 <% end %>
-</ul>
 
-<%= govuk_pagination(pagy: @pagy) %>
+<% if @agreements.present? %>
+  <ul class="govuk-list">
+  <% @agreements.each do |agreement| %>
+    <li>
+      <%= link_to agreement.name, agreement, class: "govuk-link" %>
+    </li>
+  <% end %>
+  </ul>
+
+  <%= govuk_pagination(pagy: @pagy) %>
+<% else %>
+  <p>No matching records found<p>
+<% end %>

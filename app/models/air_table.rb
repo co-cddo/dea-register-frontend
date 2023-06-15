@@ -21,7 +21,7 @@ class AirTable < ApplicationRecord
     def search(text)
       query = { "filterByFormula" => %[SEARCH("#{text}",{Name})] }
       data = AirTableApi.data_for(air_table_path, query:)
-      return [] if data[:records].empty?
+      return none if data[:records].empty?
 
       ids = data[:records].pluck(:id)
       where(record_id: ids)
