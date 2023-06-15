@@ -38,6 +38,8 @@ class AirTable < ApplicationRecord
         query = data[:offset].present? ? { offset: data[:offset] } : {}
         data = AirTableApi.data_for(air_table_path, query:)
         data[:records].each do |record|
+          next if record[:fields].empty?
+
           instance = find_or_initialize_by(record_id: record[:id])
           instance.fields = record[:fields]
           instance.name = record.dig(:fields, :name) || record.dig(:fields, :Name)
