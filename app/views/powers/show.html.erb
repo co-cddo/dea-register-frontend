@@ -1,0 +1,22 @@
+<h1 class="govuk-heading-l"><%= @power.name %></h1>
+
+<dl class="govuk-summary-list">
+  <% @power.fields.each do |key, value| %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key"><%= key.humanize %></dt>
+      <dd class="govuk-summary-list__value"><%= value %></dd>
+    </div>
+  <% end %>
+</dl>
+
+<h2 class="govuk-heading-m">Agreements</h2>
+
+<ul class="govuk-list">
+<% @power.agreements.each do |agreement| %>
+  <li>
+    <%= link_to agreement.name, agreement, class: "govuk-link" %>
+  </li>
+<% end %>
+</ul>
+
+
