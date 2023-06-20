@@ -9,6 +9,9 @@
 # With that in place, `FooBar.populate` will pull each of the records from AirTable and
 # store them in the air_tables table with the type 'FooBar'.
 class AirTable < ApplicationRecord
+  include PgSearch::Model
+  multisearchable against: %i[name fields]
+
   class << self
     attr_accessor :air_table_name
 

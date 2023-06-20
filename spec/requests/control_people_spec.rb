@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "/control_people", type: :request do
   let!(:control_person) { create :control_person }

@@ -1,5 +1,4 @@
 class ControlPeopleController < ApplicationController
-
   def index
     @control_people = ControlPerson.all
   end
