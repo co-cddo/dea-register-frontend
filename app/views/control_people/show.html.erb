@@ -1,7 +1,7 @@
-<h1 class="govuk-heading-l"><%= @power.name %></h1>
+<h1 class="govuk-heading-l"><%= @control_person.name %></h1>
 
 <dl class="govuk-summary-list">
-  <% @power.fields.each do |key, value| %>
+  <% @control_person.fields.each do |key, value| %>
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key"><%= key.humanize %></dt>
       <dd class="govuk-summary-list__value"><%= value %></dd>
@@ -9,12 +9,13 @@
   <% end %>
 </dl>
 
-<h2 class="govuk-heading-m">Agreements</h2>
+<h2 class="govuk-heading-m">Powers</h2>
 
 <ul class="govuk-list">
-<% @power.agreements.each do |agreement| %>
+<% @control_person.powers.each do |power| %>
   <li>
-    <%= link_to agreement.name, agreement, class: "govuk-link" %>
+    <%= link_to power.name, power, class: "govuk-link" %>
   </li>
 <% end %>
 </ul>
+

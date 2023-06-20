@@ -1,0 +1,9 @@
+<h1 class="govuk-heading-l">Controllers</h1>
+
+<ul class="govuk-list">
+<% @control_people.each do |control_person| %>
+  <li>
+    <%= link_to control_person.name, control_person, class: "govuk-link" %>
+  </li>
+<% end %>
+</ul>
