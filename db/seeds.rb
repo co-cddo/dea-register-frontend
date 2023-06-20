@@ -14,12 +14,12 @@ results = {
   control_people: ControlPerson.count,
   powers: Power.count,
   power_agreements: PowerAgreement.count,
-  power_control_people: PowerControlPerson.count
+  power_control_people: PowerControlPerson.count,
 }
 
 report = ["The following have been created:"]
-results.each {|n,c| report << "\t#{n} - #{c}"}
+results.each { |n, c| report << "\t#{n} - #{c}" }
 report = report.join("\n")
 
 Rails.logger.info report
-puts report
+Rails.logger.debug report
