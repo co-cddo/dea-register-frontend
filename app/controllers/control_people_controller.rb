@@ -1,6 +1,6 @@
 class ControlPeopleController < ApplicationController
   def index
-    @control_people = ControlPerson.all
+    @pagy, @control_people = pagy(ControlPerson.all)
   end
 
   def show
