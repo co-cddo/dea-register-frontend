@@ -1,6 +1,6 @@
 class PowersController < ApplicationController
   def index
-    @powers = Power.includes(:agreements)
+    @pagy, @powers = pagy(Power.includes(:agreements))
   end
 
   def show

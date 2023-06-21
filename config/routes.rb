@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :agreements, only: [:show]
   resources :powers, only: %i[index show]
+  resources :processors, only: %i[index show]
   resources :control_people, only: %i[index show], path: :controllers
   resources :search, only: [:index]
 end
