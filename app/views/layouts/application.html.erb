@@ -12,7 +12,16 @@
 
   <body>
     <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
-    <%= govuk_header(service_name: "DEA Register") %>
+    <%= govuk_header(service_name: "DEA Register") do |header|
+          {
+            Agreements: root_path,
+            Powers: powers_path,
+            Processors: processors_path,
+            Controllers: control_people_path
+          }.each do |text, href|
+            header.with_navigation_item(text:, href:, active: current_page?(href))
+          end
+        end %>
 
     <div class="govuk-width-container ">
       <%= govuk_phase_banner(
