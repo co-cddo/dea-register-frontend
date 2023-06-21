@@ -80,5 +80,38 @@ shared_examples_for "is_air_table" do
         expect { populate }.not_to change(described_class, :count)
       end
     end
+
+    context "when name has two parts separated by a colon" do
+      let(:first_part) { Faker::Lorem.sentence }
+      let(:second_part) { Faker::Company.name }
+      let(:name) { "#{first_part} : #{second_part}" }
+
+      it "creates a new record" do
+        expect { populate }.to change(described_class, :count).by(1)
+      end
+
+      it "only uses the second part to populate the name attribute" do
+        populate
+        record = described_class.last
+        expect(record.name).to eq(second_part)
+      end
+    end
+
+    context "when name has three parts separated by colons" do
+      let(:first_part) { Faker::Lorem.sentence }
+      let(:second_part) { Faker::Company.name }
+      let(:third_part) { Faker::Lorem.sentence }
+      let(:name) { "#{first_part} : #{second_part} : #{third_part} " }
+
+      it "creates a new record" do
+        expect { populate }.to change(described_class, :count).by(1)
+      end
+
+      it "only uses the second part to populate the name attribute" do
+        populate
+        record = described_class.last
+        expect(record.name).to eq(name)
+      end
+    end
   end
 end
