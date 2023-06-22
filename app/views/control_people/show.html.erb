@@ -1,21 +1,23 @@
 <h1 class="govuk-heading-l"><%= @control_person.name %></h1>
 
-<dl class="govuk-summary-list">
-  <% @control_person.fields.each do |key, value| %>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key"><%= key.humanize %></dt>
-      <dd class="govuk-summary-list__value"><%= value %></dd>
-    </div>
+<p><%= @control_person.fields['Name'] %><p>
+
+<% associations = {
+     powers: @control_person.powers,
+     agreements: @control_person.agreements
+   } %>
+
+<% associations.each do |name, association| %>
+  <% if association.present? %>
+    <h2 class="govuk-heading-m"><%= name.to_s.humanize %></h2>
+
+    <ul class="govuk-list">
+    <% association.each do |model| %>
+      <li>
+        <%= link_to model.name, model, class: "govuk-link" %>
+      </li>
+    <% end %>
+    </ul>
   <% end %>
-</dl>
-
-<h2 class="govuk-heading-m">Powers</h2>
-
-<ul class="govuk-list">
-<% @control_person.powers.each do |power| %>
-  <li>
-    <%= link_to power.name, power, class: "govuk-link" %>
-  </li>
 <% end %>
-</ul>
 

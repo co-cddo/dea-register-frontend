@@ -3,4 +3,7 @@ class ControlPerson < AirTable
 
   has_many :power_control_people
   has_many :powers, through: :power_control_people
+
+  has_many :agreement_control_people
+  has_many :agreements, through: :agreement_control_people
 end

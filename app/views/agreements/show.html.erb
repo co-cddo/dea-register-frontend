@@ -1,10 +1,37 @@
 <h1 class="govuk-heading-l"><%= @agreement.name %></h1>
 
+<% fields_to_show = [
+    'Purpose', 'Benefits', 'Disclosed Information', 'Method', 'Contact', 'Start_date', 'End_date', 'Review_date',
+    'Retention Period', 'ISA_status', 'ID'
+   ] %>
+
 <dl class="govuk-summary-list">
-  <% @agreement.fields.each do |key, value| %>
+  <% @agreement.fields.slice(*fields_to_show).each do |key, value| %>
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key"><%= key.humanize %></dt>
       <dd class="govuk-summary-list__value"><%= value %></dd>
     </div>
   <% end %>
 </dl>
+
+<% associations = {
+     powers: @agreement.powers,
+     controllers: @agreement.control_people,
+     processors: @agreement.processors
+   } %>
+
+<% associations.each do |name, association| %>
+  <% if association.present? %>
+    <h2 class="govuk-heading-m"><%= name.to_s.humanize %></h2>
+
+    <ul class="govuk-list">
+    <% association.each do |model| %>
+      <li>
+        <%= link_to model.name, model, class: "govuk-link" %>
+      </li>
+    <% end %>
+    </ul>
+  <% end %>
+<% end %>
+
+

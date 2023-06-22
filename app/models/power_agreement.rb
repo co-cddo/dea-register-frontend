@@ -3,9 +3,9 @@ class PowerAgreement < ApplicationRecord
   belongs_to :agreement
 
   def self.populate
-    Power.find_each do |power|
-      (power.fields["Agreement"] || []).each do |agreement_id|
-        agreement = Agreement.find_by!(record_id: agreement_id)
+    Agreement.find_each do |agreement|
+      (agreement.fields["Power Disclosure"] || []).each do |power_id|
+        power = Power.find_by!(record_id: power_id)
         find_or_create_by! power:, agreement:
       end
     end
