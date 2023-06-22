@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_20_130223) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_22_133034) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "agreement_control_people", id: false, force: :cascade do |t|
+    t.bigint "agreement_id", null: false
+    t.bigint "control_person_id", null: false
+    t.index ["agreement_id", "control_person_id"], name: "agreement_control_people_by_agreement"
+    t.index ["control_person_id", "agreement_id"], name: "agreement_control_people_by_people"
+  end
+
+  create_table "agreement_processors", id: false, force: :cascade do |t|
+    t.bigint "agreement_id", null: false
+    t.bigint "processor_id", null: false
+    t.index ["agreement_id", "processor_id"], name: "agreement_processors_by_agreement"
+    t.index ["processor_id", "agreement_id"], name: "agreement_processors_by_processor"
+  end
 
   create_table "air_table_bases", force: :cascade do |t|
     t.string "name"
