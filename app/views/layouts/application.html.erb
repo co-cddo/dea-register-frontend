@@ -16,8 +16,8 @@
           {
             Agreements: root_path,
             Powers: powers_path,
-            Processors: processors_path,
-            Controllers: control_people_path
+            Controllers: control_people_path,
+            Processors: processors_path
           }.each do |text, href|
             header.with_navigation_item(text:, href:, active: current_page?(href))
           end
