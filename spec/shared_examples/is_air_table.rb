@@ -113,5 +113,15 @@ shared_examples_for "is_air_table" do
         expect(record.name).to eq(name)
       end
     end
+
+    context "when records are removed from Airtable" do
+      # In this condition the records will be in the local database but not in the
+      # data pulled from air table
+      before { create_list described_class.to_s.underscore.to_sym, 2 }
+
+      it "creates a new record" do
+        expect { populate }.to change(described_class, :count).by(-1)
+      end
+    end
   end
 end
