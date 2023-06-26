@@ -34,6 +34,7 @@ class AirTable < ApplicationRecord
 
     def populate_from_air_table
       data = {}
+      created_ids = []
       # API returns 100 records at a time.
       # If there are more records, API returns an offset key that needs to be
       # passed into the next query
@@ -53,8 +54,11 @@ class AirTable < ApplicationRecord
 
           instance.fields = record[:fields]
           instance.save!
+          created_ids << instance.id
         end
       end
+      # Remove records that no longer match any on Airtable (assume deleted)
+      where.not(id: created_ids).destroy_all
     end
 
     def air_table_path
