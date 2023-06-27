@@ -32,17 +32,17 @@ RSpec.describe AgreementControlPerson, type: :model do
     let(:database_record) do
       described_class.find_by(
         agreement: agreement_control_person.agreement,
-        control_person: agreement_control_person.control_person
+        control_person: agreement_control_person.control_person,
       )
     end
 
     it "when agreement destroyed, it is removed from database" do
-      agreement_control_person.agreement.destroy
+      agreement_control_person.agreement.destroy!
       expect(database_record).to be_nil
     end
 
     it "when control person destoryed, it is removed from database" do
-      agreement_control_person.control_person.destroy
+      agreement_control_person.control_person.destroy!
       expect(database_record).to be_nil
     end
 

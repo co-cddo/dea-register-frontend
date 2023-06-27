@@ -1,15 +1,26 @@
-<h1 class="govuk-heading-l">Agreements</h1>
+<%=
+  govuk_table do |table|
+    table.with_caption(size: 'l', text: 'Agreements')
 
-<% if @agreements.present? %>
-  <ul class="govuk-list">
-  <% @agreements.each do |agreement| %>
-    <li>
-      <%= link_to agreement.name, agreement, class: "govuk-link" %>
-    </li>
-  <% end %>
-  </ul>
+    table.with_head do |head|
+      head.with_row do |row|
+        row.with_cell(text: 'ID')
+        row.with_cell(text: 'Name')
+      end
+    end
 
-  <%= govuk_pagination(pagy: @pagy) %>
-<% else %>
-  <p>No matching records found<p>
-<% end %>
+    table.with_body do |body|
+      @agreements.each do |agreement|
+        body.with_row do |row|
+          row.with_cell(text: agreement.fields['ID'])
+          row.with_cell(text: link_to(agreement.name, agreement, class: "govuk-link"))
+        end
+      end
+    end
+  end
+%>
+
+<%= govuk_pagination(pagy: @pagy) %>
+<p class="govuk-body">
+  Showing Agreements <%= @pagy.from %> to <%= @pagy.to %> of <%= @pagy.count %>.
+</p>
