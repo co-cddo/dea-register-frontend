@@ -1,11 +1,24 @@
-<h1 class="govuk-heading-l">Powers</h1>
+<%=
+  govuk_table do |table|
+    table.with_caption(size: 'l', text: 'Powers')
 
-<ul class="govuk-list">
-<% @powers.each do |power| %>
-  <li>
-    <%= link_to power.name, power, class: "govuk-link" %>
-  </li>
-<% end %>
-</ul>
+    table.with_head do |head|
+      head.with_row do |row|
+        row.with_cell(text: 'Name')
+        row.with_cell(text: 'Description')
+      end
+    end
+
+    table.with_body do |body|
+      @powers.each do |power|
+        body.with_row do |row|
+          row.with_cell(text: link_to(power.name, power, class: "govuk-link"))
+          row.with_cell(text: power.fields['description'])
+        end
+      end
+    end
+  end
+%>
+
 
 <%= govuk_pagination(pagy: @pagy) %>
