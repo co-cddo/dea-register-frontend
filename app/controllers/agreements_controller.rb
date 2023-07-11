@@ -21,6 +21,7 @@ private
     options = {
       name: :name,
       id: Arel.sql("(fields ->> 'ID')::Integer"),
+      start_date: Arel.sql("(fields ->> 'Start_date')::timestamptz"),
     }
 
     return options[:id] if params[:sort_by].blank?

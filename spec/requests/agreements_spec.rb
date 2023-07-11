@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Agreements", type: :request do
   let(:fields) { { "Purpose" => Faker::Lorem.sentence } }
-  let!(:agreement) { create :agreement, name: "A", fields: fields.merge(ID: 2) }
+  let!(:agreement) { create :agreement, name: "A", fields: fields.merge(ID: 2, Start_date: to_json_date(3.days.ago)) }
 
   describe "GET root (index)" do
-    let!(:agreement_b) { create :agreement, name: "B", fields: { ID: 1 } }
-    let!(:agreement_c) { create :agreement, name: "C", fields: { ID: 3 } }
+    let!(:agreement_b) { create :agreement, name: "B", fields: { ID: 1, Start_date: to_json_date(1.day.ago) } }
+    let!(:agreement_c) { create :agreement, name: "C", fields: { ID: 3, Start_date: to_json_date(2.days.ago) } }
 
     it "returns http success" do
       get root_path
@@ -25,6 +25,16 @@ RSpec.describe "Agreements", type: :request do
 
     context "when sorting present" do
       let(:html) { Nokogiri::HTML(response.body) }
+
+      it "sorts by start date" do
+        get root_path, params: { sort_by: :start_date, direction: :ascending }
+        expect(html.css(".agreement-name a").map(&:inner_html)).to eq(%w[A C B])
+      end
+
+      it "sorts by start date descending" do
+        get root_path, params: { sort_by: :start_date, direction: :descending }
+        expect(html.css(".agreement-name a").map(&:inner_html)).to eq(%w[B C A])
+      end
 
       it "sorts by name" do
         get root_path, params: { sort_by: :name, direction: :ascending }
