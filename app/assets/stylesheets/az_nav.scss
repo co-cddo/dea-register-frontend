@@ -1,0 +1,18 @@
+.az-nav {
+  padding-inline-start: 0;
+
+  .az-item {
+    display: inline-block;
+    width: 1.3rem;
+    height: 1.3rem;
+    background-color: govuk-colour("light-grey");
+    padding: 0.25rem;
+    text-align: center;
+    margin-bottom: 0.25rem;
+    line-height: inherit;
+
+    a, a:visited {
+      color: $govuk-link-colour;
+    }
+  }
+}

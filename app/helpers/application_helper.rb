@@ -22,6 +22,14 @@ module ApplicationHelper
     params[:sort_by] == field.to_s ? params[:direction] : :none
   end
 
+  def az_content(first_letter, &block)
+    content = capture(&block)
+
+    return content unless first_letter
+
+    render "shared/az_content", content:, first_letter:
+  end
+
 private
 
   def button_sort_direction(field)

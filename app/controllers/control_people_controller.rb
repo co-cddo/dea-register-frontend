@@ -1,6 +1,9 @@
 class ControlPeopleController < ApplicationController
   def index
-    @pagy, @control_people = pagy(ControlPerson.all)
+    control_people = ControlPerson.all
+    control_people = control_people.where_first_letter(first_letter) if first_letter
+
+    @pagy, @control_people = pagy(control_people)
   end
 
   def show
