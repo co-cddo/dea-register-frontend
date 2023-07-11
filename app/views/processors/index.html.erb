@@ -1,11 +1,15 @@
 <h1 class="govuk-heading-l">Processors</h1>
 
-<ul class="govuk-list">
-  <% @processors.each do |processor| %>
-    <li>
-      <%= link_to processor.name, processor, class: "govuk-link" %>
-    </li>
-  <% end %>
-</ul>
+<%= render 'shared/az_nav' %>
+
+<%= az_content(@first_letter) do %>
+  <ul class="govuk-list">
+    <% @processors.each do |processor| %>
+      <li>
+        <%= link_to processor.name, processor, class: "govuk-link" %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
 
 <%= govuk_pagination(pagy: @pagy) %>

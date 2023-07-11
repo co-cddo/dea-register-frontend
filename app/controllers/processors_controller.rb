@@ -1,7 +1,10 @@
 class ProcessorsController < ApplicationController
   # GET /processors
   def index
-    @pagy, @processors = pagy(Processor.all)
+    processors = Processor.all
+    processors = Processor.where_first_letter(first_letter) if first_letter
+
+    @pagy, @processors = pagy(processors)
   end
 
   # GET /processors/1

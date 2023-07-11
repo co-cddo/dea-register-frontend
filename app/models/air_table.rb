@@ -12,6 +12,10 @@ class AirTable < ApplicationRecord
   include PgSearch::Model
   multisearchable against: %i[name fields]
 
+  scope :where_first_letter, lambda { |letter|
+    where("substr(name, 1, 1) = ? OR substr(name, 1, 1) = ?", letter.upcase, letter.downcase)
+  }
+
   class << self
     attr_accessor :air_table_name
 
