@@ -6,6 +6,7 @@
       head.with_row do |row|
         row.with_cell(text: sort_button(:id, root_path, label: 'ID'), html_attributes: { 'aria-sort' => sort_direction_for(:id) })
         row.with_cell(text: sort_button(:name, root_path), html_attributes: { 'aria-sort' => sort_direction_for(:name) })
+        row.with_cell(text: sort_button(:start_date, root_path, label: 'Start Date'), html_attributes: { 'aria-sort' => sort_direction_for(:start_date) })
       end
     end
 
@@ -14,6 +15,7 @@
         body.with_row do |row|
           row.with_cell(text: agreement.fields['ID'], html_attributes: { class: 'agreement-id' })
           row.with_cell(text: link_to(agreement.name, agreement, class: "govuk-link"), html_attributes: { class: 'agreement-name' })
+          row.with_cell(text: agreement.fields['Start_date'], html_attributes: { class: 'agreement-start-date' })
         end
       end
     end
