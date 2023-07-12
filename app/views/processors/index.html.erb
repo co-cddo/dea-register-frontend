@@ -3,6 +3,8 @@
 <%= render 'shared/az_nav' %>
 
 <%= az_content(@first_letter) do %>
+  <% if @processors.present? %>
+
   <ul class="govuk-list">
     <% @processors.each do |processor| %>
       <li>
@@ -10,6 +12,10 @@
       </li>
     <% end %>
   </ul>
+
+  <% else %>
+    <p class="govuk-body">No matching records found</p>
+  <% end %>
 <% end %>
 
 <%= govuk_pagination(pagy: @pagy) %>

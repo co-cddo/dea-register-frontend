@@ -1,28 +1,47 @@
-<%=
-  govuk_table do |table|
-    table.with_caption(size: 'l', text: 'Agreements')
+<h1 class="govuk-heading-l">Agreements</h1>
 
-    table.with_head do |head|
-      head.with_row do |row|
-        row.with_cell(text: sort_button(:id, root_path, label: 'ID'), html_attributes: { 'aria-sort' => sort_direction_for(:id) })
-        row.with_cell(text: sort_button(:name, root_path), html_attributes: { 'aria-sort' => sort_direction_for(:name) })
-        row.with_cell(text: sort_button(:start_date, root_path, label: 'Start Date'), html_attributes: { 'aria-sort' => sort_direction_for(:start_date) })
-      end
-    end
+<%= render 'shared/az_nav' %>
 
-    table.with_body do |body|
-      @agreements.each do |agreement|
-        body.with_row do |row|
-          row.with_cell(text: agreement.fields['ID'], html_attributes: { class: 'agreement-id' })
-          row.with_cell(text: link_to(agreement.name, agreement, class: "govuk-link"), html_attributes: { class: 'agreement-name' })
-          row.with_cell(text: agreement.fields['Start_date'], html_attributes: { class: 'agreement-start-date' })
+<%= az_content(@first_letter) do %>
+  <% if @agreements.present? %>
+
+    <%=
+      govuk_table do |table|
+        table.with_head do |head|
+          head.with_row do |row|
+            row.with_cell(
+              text: sort_button(:id, root_path, label: 'ID', params: { first_letter: @first_letter }),
+              html_attributes: { 'aria-sort' => sort_direction_for(:id) }
+            )
+            row.with_cell(
+              text: sort_button(:name, root_path, params: { first_letter: @first_letter }),
+              html_attributes: { 'aria-sort' => sort_direction_for(:name) }
+            )
+            row.with_cell(
+              text: sort_button(:start_date, root_path, label: 'Start Date', params: { first_letter: @first_letter }),
+              html_attributes: { 'aria-sort' => sort_direction_for(:start_date) }
+            )
+          end
+        end
+
+        table.with_body do |body|
+          @agreements.each do |agreement|
+            body.with_row do |row|
+              row.with_cell(text: agreement.fields['ID'], html_attributes: { class: 'agreement-id' })
+              row.with_cell(text: link_to(agreement.name, agreement, class: "govuk-link"), html_attributes: { class: 'agreement-name' })
+              row.with_cell(text: agreement.fields['Start_date'], html_attributes: { class: 'agreement-start-date' })
+            end
+          end
         end
       end
-    end
-  end
-%>
+    %>
 
-<%= govuk_pagination(pagy: @pagy) %>
-<p class="govuk-body">
-  Showing Agreements <%= @pagy.from %> to <%= @pagy.to %> of <%= @pagy.count %>.
-</p>
+    <%= govuk_pagination(pagy: @pagy) %>
+    <p class="govuk-body">
+      Showing Agreements <%= @pagy.from %> to <%= @pagy.to %> of <%= @pagy.count %>.
+    </p>
+
+  <% else %>
+    <p class="govuk-body">No matching records found</p>
+  <% end %>
+<% end %>

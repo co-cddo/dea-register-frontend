@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def sort_button(field, path, label: nil)
+  def sort_button(field, path, label: nil, params: {})
     label ||= field.to_s.humanize
     direction = button_sort_direction(field)
     button_to(
@@ -11,7 +11,7 @@ module ApplicationHelper
       params: {
         sort_by: field,
         direction:,
-      },
+      }.merge(params),
     )
   end
 
@@ -22,6 +22,8 @@ module ApplicationHelper
     params[:sort_by] == field.to_s ? params[:direction] : :none
   end
 
+  # Render block within partial if first letter present
+  # Otherwise render normally
   def az_content(first_letter, &block)
     content = capture(&block)
 

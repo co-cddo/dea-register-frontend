@@ -2,11 +2,12 @@ require "rails_helper"
 
 RSpec.describe ApplicationHelper, type: :helper do
   describe ".sort_button" do
-    subject(:sort_button) { helper.sort_button field, path, label: }
+    subject(:sort_button) { helper.sort_button field, path, label:, params: }
     let(:field) { :foo }
     let(:path) { root_path }
     let(:label) { "Bar" }
     let(:html) { Nokogiri::HTML(sort_button) }
+    let(:params) { {} }
 
     it "creates a button_to form" do
       expect(html.at("form")[:class]).to eq("button_to")
@@ -62,6 +63,16 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       it "has a direction attribute set as ascending" do
         expect(html.at("input[name=direction][value=ascending]")).to be_present
+      end
+    end
+
+    context "when additional params present" do
+      let(:params) do
+        { foo: :bar }
+      end
+
+      it "has a matching attribute set" do
+        expect(html.at("input[name=foo][value=bar]")).to be_present
       end
     end
   end

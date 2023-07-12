@@ -1,6 +1,9 @@
 class PowersController < ApplicationController
   def index
-    @pagy, @powers = pagy(Power.includes(:agreements))
+    powers = Power.includes(:agreements)
+    powers = powers.where_first_letter(first_letter) if first_letter
+
+    @pagy, @powers = pagy(powers)
   end
 
   def show

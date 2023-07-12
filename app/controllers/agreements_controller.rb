@@ -1,10 +1,8 @@
 class AgreementsController < ApplicationController
   def index
-    agreements = if params[:q].present?
-                   Agreement.search(params[:q])
-                 else
-                   Agreement.all
-                 end
+    agreements = Agreement.all
+    agreements = agreements.search(params[:q]) if params[:q].present?
+    agreements = agreements.where_first_letter(first_letter) if first_letter
 
     agreements = agreements.order(sort_by => direction)
 
