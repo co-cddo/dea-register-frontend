@@ -1,0 +1,14 @@
+<% associations.each do |name, association| %>
+  <% if association.present? %>
+    <h2 class="govuk-heading-m"><%= name.to_s.humanize %></h2>
+
+    <ul class="govuk-list">
+    <% association.each do |model| %>
+      <% label = model.is_a?(Agreement) ? model.id_and_name : model.name %>
+      <li>
+        <%= link_to label, model, class: "govuk-link" %>
+      </li>
+    <% end %>
+    </ul>
+  <% end %>
+<% end %>

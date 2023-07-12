@@ -33,4 +33,19 @@ RSpec.describe Agreement, type: :model do
       expect(described_class.search("foo")).not_to include(other)
     end
   end
+
+  describe "#id_and_name" do
+    let(:agreement) { create :agreement, name: "Foo", fields: { ID: "5" } }
+
+    it "returns the ID and name of the agreement" do
+      expect(agreement.id_and_name).to eq("5 - Foo")
+    end
+
+    context "when id missing" do
+      let(:agreement) { create :agreement }
+      it "just returns the name" do
+        expect(agreement.id_and_name).to eq(agreement.name)
+      end
+    end
+  end
 end
