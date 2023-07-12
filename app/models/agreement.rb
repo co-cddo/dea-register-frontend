@@ -9,4 +9,8 @@ class Agreement < AirTable
 
   has_many :agreement_processors, dependent: :delete_all
   has_many :processors, through: :agreement_processors
+
+  def id_and_name
+    [fields["ID"], name].select(&:present?).join(" - ")
+  end
 end

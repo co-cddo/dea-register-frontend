@@ -1,7 +1,7 @@
 <ul class="az-nav">
   <% ("A".."Z").each do |letter| %>
     <li class="az-item govuk-body">
-      <%= link_to_unless (letter == @first_letter), letter, first_letter: letter %>
+      <%= link_to_unless (letter == @first_letter), letter, { first_letter: letter }, aria: { label: "filter by first letter #{ letter }" } %>
     </li>
   <% end %>
   <li class="az-item govuk-body"><%= link_to 'All', first_letter: '' %></li>

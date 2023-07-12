@@ -2,22 +2,4 @@
 
 <p><%= @control_person.fields['Name'] %><p>
 
-<% associations = {
-     powers: @control_person.powers,
-     agreements: @control_person.agreements
-   } %>
-
-<% associations.each do |name, association| %>
-  <% if association.present? %>
-    <h2 class="govuk-heading-m"><%= name.to_s.humanize %></h2>
-
-    <ul class="govuk-list">
-    <% association.each do |model| %>
-      <li>
-        <%= link_to model.name, model, class: "govuk-link" %>
-      </li>
-    <% end %>
-    </ul>
-  <% end %>
-<% end %>
-
+<%= render 'shared/associations', associations: { agreements: @control_person.agreements, powers: @control_person.powers } %>

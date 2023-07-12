@@ -4,21 +4,4 @@
 <p class="govuk-body"><%= @power.fields['description'] %></p>
 
 
-<% associations = {
-     controllers: @power.control_people,
-     agreements: @power.agreements
-   } %>
-
-<% associations.each do |name, association| %>
-  <% if association.present? %>
-    <h2 class="govuk-heading-m"><%= name.to_s.humanize %></h2>
-
-    <ul class="govuk-list">
-    <% association.each do |model| %>
-      <li>
-        <%= link_to model.name, model, class: "govuk-link" %>
-      </li>
-    <% end %>
-    </ul>
-  <% end %>
-<% end %>
+<%= render 'shared/associations', associations: { agreements: @power.agreements, controllers: @power.control_people } %>

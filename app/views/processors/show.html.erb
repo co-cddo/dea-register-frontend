@@ -2,14 +2,4 @@
 
 <p class="govuk-body"><%= @processor.fields['Name'] %></p>
 
-<% if @processor.agreements.present? %>
-  <h2 class="govuk-heading-m">Agreements</h2>
-
-  <ul class="govuk-list">
-  <% @processor.agreements.each do |agreement| %>
-    <li>
-      <%= link_to agreement.name, agreement, class: "govuk-link" %>
-    </li>
-  <% end %>
-  </ul>
-<% end %>
+<%= render 'shared/associations', associations: { agreements: @processor.agreements } %>

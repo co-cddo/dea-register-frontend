@@ -42,7 +42,7 @@ RSpec.describe "Powers", type: :request do
 
     it "displays power" do
       get power_path(power)
-      expect(response.body).to include(power.name)
+      expect(response.body).to include(escape_html(power.name))
     end
 
     it "displays link to associated agreement" do
