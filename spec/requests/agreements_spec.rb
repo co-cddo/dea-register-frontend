@@ -23,6 +23,19 @@ RSpec.describe "Agreements", type: :request do
       expect(response.body).to include(agreement_path(agreement_b))
     end
 
+    context "with a first letter filter" do
+      it "displays link to matching agreements" do
+        get root_path, params: { first_letter: "B" }
+        expect(response.body).to include(agreement_path(agreement_b))
+      end
+
+      it "does not display links to other agrements" do
+        get root_path, params: { first_letter: "B" }
+        expect(response.body).not_to include(agreement_path(agreement))
+        expect(response.body).not_to include(agreement_path(agreement_c))
+      end
+    end
+
     context "when sorting present" do
       let(:html) { Nokogiri::HTML(response.body) }
 
