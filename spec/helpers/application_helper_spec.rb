@@ -97,4 +97,25 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe ".page_title" do
+    let(:site_name) { Faker::Company.name }
+    let(:additional) { Faker::Company.industry }
+    let(:preferred) { Faker::Company.catch_phrase }
+    it "by default should return site name" do
+      expect(helper.page_title(site_name:)).to eq(site_name)
+    end
+
+    context "when additional content present" do
+      it "should display that after site name" do
+        expect(helper.page_title(site_name:, additional:)).to eq("#{site_name} - #{additional}")
+      end
+    end
+
+    context "when additional and preferred present" do
+      it "should display preferred only after site name" do
+        expect(helper.page_title(site_name:, additional:, preferred:)).to eq("#{site_name} - #{preferred}")
+      end
+    end
+  end
 end
