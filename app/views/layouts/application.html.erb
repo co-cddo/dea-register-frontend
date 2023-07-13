@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DEA Register</title>
+    <title><%=
+      page_title(
+        site_name: "DEA Register",
+        additional: ([controller_name.humanize, params[:id]].compact.join(' - ') unless current_page?(root_path)),
+        preferred: content_for(:page_title)
+      )
+    %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>

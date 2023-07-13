@@ -1,3 +1,11 @@
+<%
+  page_title = ["Agreements"]
+  page_title << @first_letter if @first_letter
+  page_title << "by #{params[:sort_by].humanize} #{params[:direction]}" if params[:sort_by].present?
+  page_title << "Filter: #{params[:q]}" if params[:q].present?
+  content_for :page_title, page_title.join(' - ')
+%>
+
 <h1 class="govuk-heading-l">Agreements</h1>
 
 <%= render 'shared/az_nav' %>

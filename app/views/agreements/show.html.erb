@@ -1,3 +1,5 @@
+<% content_for :page_title, "Agreement - #{@agreement.fields['ID']}" %>
+
 <h1 class="govuk-heading-l"><%= @agreement.name %></h1>
 
 <% fields_to_show = [
