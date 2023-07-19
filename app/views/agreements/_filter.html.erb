@@ -1,0 +1,110 @@
+<div class="moj-filter govuk-!-margin-bottom-5">
+
+  <div class="moj-filter__header">
+
+    <div class="moj-filter__header-title">
+      <h2 class="govuk-heading-m">Filter</h2>
+    </div>
+
+  </div>
+
+  <% if @first_letter || @control_person || @isa_status || params[:sort_by].present? %>
+    <div class="moj-filter__content">
+
+      <div class="moj-filter__selected">
+
+        <div class="moj-filter__selected-heading">
+
+          <div class="moj-filter__heading-title">
+            <h2 class="govuk-heading-m">Selected filters</h2>
+          </div>
+
+          <div class="moj-filter__heading-action">
+            <p>
+              <%= link_to 'Clear filters', root_path, class: "govuk-link govuk-link--no-visited-state" %>
+            </p>
+          </div>
+
+        </div>
+
+        <% if @first_letter %>
+          <h3 class="govuk-heading-s govuk-!-margin-bottom-0">First Letter</h3>
+
+          <ul class="moj-filter-tags">
+
+            <li class="moj-filter__tag"><%= @first_letter %></li>
+
+          </ul>
+        <% end %>
+
+        <% if @control_person %>
+          <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Controller</h3>
+
+          <ul class="moj-filter-tags">
+
+            <li class="moj-filter__tag"><%= @control_person.name %></li>
+
+          </ul>
+        <% end %>
+
+        <% if @isa_status %>
+          <h3 class="govuk-heading-s govuk-!-margin-bottom-0">ISA Status</h3>
+
+          <ul class="moj-filter-tags">
+
+            <li class="moj-filter__tag"><%= @isa_status %></li>
+
+          </ul>
+        <% end %>
+
+        <% if params[:sort_by].present? %>
+          <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Sort by</h3>
+
+          <ul class="moj-filter-tags">
+
+            <li class="moj-filter__tag"><%= params[:sort_by].humanize %> <%= params[:direction] %></li>
+
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="moj-filter__options">
+      <%= form_tag(root_path, method: :get) do %>
+        <%= hidden_field_tag :sort_by, params[:sort_by] %>
+        <%= hidden_field_tag :direction, params[:direction] %>
+
+        <button class="govuk-button" data-module="govuk-button" data-test-id="submit-button">
+          Apply filters
+        </button>
+
+
+        <div class="govuk-form-group">
+          <%= render 'shared/az_nav', applied_filters: params.to_unsafe_hash.slice(:controller_filter, :isa_status) %>
+          <%= hidden_field_tag :first_letter, params[:first_letter] %>
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="contoller_filter">
+            Controller
+          </label>
+          <select class="govuk-select" id="controller_filter" name="controller_filter">
+            <%= content_tag :option, 'Any', value: '' %>
+            <%= options_for_select(@control_people, selected: params[:controller_filter]) %>
+          </select>
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="isa_status">
+            ISA Status
+          </label>
+          <select class="govuk-select" id="isa_status" name="isa_status">
+            <%= content_tag :option, 'Any', value: '' %>
+            <%= options_for_select(Agreement.isa_statuses, selected: params[:isa_status]) %>
+          </select>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+

@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Agreements", type: :request do
   let(:fields) { { "Purpose" => Faker::Lorem.sentence } }
-  let!(:agreement) { create :agreement, name: "A", fields: fields.merge(ID: 2, Start_date: to_json_date(3.days.ago)) }
+  let!(:agreement) { create :agreement, name: "A", fields: fields.merge(ID: 2, Start_date: to_json_date(3.days.ago), ISA_status: "Completed") }
 
   describe "GET root (index)" do
-    let!(:agreement_b) { create :agreement, name: "B", fields: { ID: 1, Start_date: to_json_date(1.day.ago) } }
-    let!(:agreement_c) { create :agreement, name: "C", fields: { ID: 3, Start_date: to_json_date(2.days.ago) } }
+    let!(:agreement_b) { create :agreement, name: "B", fields: { ID: 1, Start_date: to_json_date(1.day.ago), ISA_status: "Completed" } }
+    let!(:agreement_c) { create :agreement, name: "C", fields: { ID: 3, Start_date: to_json_date(2.days.ago), ISA_status: "Active" } }
 
     it "returns http success" do
       get root_path
@@ -32,6 +32,35 @@ RSpec.describe "Agreements", type: :request do
       it "does not display links to other agrements" do
         get root_path, params: { first_letter: "B" }
         expect(response.body).not_to include(agreement_path(agreement))
+        expect(response.body).not_to include(agreement_path(agreement_c))
+      end
+    end
+
+    context "with ISA status filter" do
+      it "displays link to matching agreements" do
+        get root_path, params: { isa_status: "Active" }
+        expect(response.body).to include(agreement_path(agreement_c))
+      end
+
+      it "does not display links to other agrements" do
+        get root_path, params: { isa_status: "Active" }
+        expect(response.body).not_to include(agreement_path(agreement))
+        expect(response.body).not_to include(agreement_path(agreement_b))
+      end
+    end
+
+    context "with controller filter" do
+      let(:agreement_control_person) { create :agreement_control_person, agreement: }
+      let(:control_person) { agreement_control_person.control_person }
+
+      it "displays link to matching agreements" do
+        get root_path, params: { controller_filter: control_person.id }
+        expect(response.body).to include(agreement_path(agreement))
+      end
+
+      it "does not display links to other agrements" do
+        get root_path, params: { controller_filter: control_person.id }
+        expect(response.body).not_to include(agreement_path(agreement_b))
         expect(response.body).not_to include(agreement_path(agreement_c))
       end
     end

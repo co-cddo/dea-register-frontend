@@ -48,4 +48,16 @@ RSpec.describe Agreement, type: :model do
       end
     end
   end
+
+  describe ".isa_statuses" do
+    subject(:isa_statuses) { described_class.isa_statuses }
+    let!(:others) { create_list :agreement, 2, fields: { ISA_status: "foo" } }
+    let!(:agreement) { create :agreement, fields: { ISA_status: "bar" } }
+
+    it "returns the existing ISA statuses" do
+      expect(isa_statuses.size).to eq(2)
+      expect(isa_statuses).to include(agreement.fields["ISA_status"])
+      expect(isa_statuses).to include(others.first.fields["ISA_status"])
+    end
+  end
 end

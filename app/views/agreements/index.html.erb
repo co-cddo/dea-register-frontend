@@ -8,48 +8,51 @@
 
 <h1 class="govuk-heading-l">Agreements</h1>
 
-<%= render 'shared/az_nav' %>
+<%= render 'filter' %>
 
-<%= az_content(@first_letter) do %>
-  <% if @agreements.present? %>
+<% if @agreements.present? %>
 
-    <%=
-      govuk_table do |table|
-        table.with_head do |head|
-          head.with_row do |row|
-            row.with_cell(
-              text: sort_button(:id, root_path, label: 'ID', params: { first_letter: @first_letter }),
-              html_attributes: { 'aria-sort' => sort_direction_for(:id) }
-            )
-            row.with_cell(
-              text: sort_button(:name, root_path, params: { first_letter: @first_letter }),
-              html_attributes: { 'aria-sort' => sort_direction_for(:name) }
-            )
-            row.with_cell(
-              text: sort_button(:start_date, root_path, label: 'Start Date', params: { first_letter: @first_letter }),
-              html_attributes: { 'aria-sort' => sort_direction_for(:start_date) }
-            )
-          end
+  <%=
+    govuk_table do |table|
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(
+            text: sort_button(:id, root_path, label: 'ID', params: params.to_unsafe_hash.slice(:controller_filter, :isa_status, :first_name)),
+            html_attributes: { 'aria-sort' => sort_direction_for(:id) }
+          )
+          row.with_cell(
+            text: sort_button(:name, root_path, params: params.to_unsafe_hash.slice(:controller_filter, :isa_status, :first_name)),
+            html_attributes: { 'aria-sort' => sort_direction_for(:name) }
+          )
+          row.with_cell(
+            text: sort_button(:start_date, root_path, label: 'Start Date', params: params.to_unsafe_hash.slice(:controller_filter, :isa_status, :first_name)),
+            html_attributes: { 'aria-sort' => sort_direction_for(:start_date) }
+          )
+          row.with_cell(
+            text: 'ISA status'
+          )
         end
+      end
 
-        table.with_body do |body|
-          @agreements.each do |agreement|
-            body.with_row do |row|
-              row.with_cell(text: agreement.fields['ID'], html_attributes: { class: 'agreement-id' })
-              row.with_cell(text: link_to(agreement.name, agreement, class: "govuk-link"), html_attributes: { class: 'agreement-name' })
-              row.with_cell(text: agreement.fields['Start_date'], html_attributes: { class: 'agreement-start-date' })
-            end
+      table.with_body do |body|
+        @agreements.each do |agreement|
+          body.with_row do |row|
+            row.with_cell(text: agreement.fields['ID'], html_attributes: { class: 'agreement-id' })
+            row.with_cell(text: link_to(agreement.name, agreement, class: "govuk-link"), html_attributes: { class: 'agreement-name' })
+            row.with_cell(text: agreement.fields['Start_date'], html_attributes: { class: 'agreement-start-date' })
+            row.with_cell(text: agreement.fields['ISA_status'], html_attributes: { class: 'agreement-isa-status' })
           end
         end
       end
-    %>
+    end
+  %>
 
-    <%= govuk_pagination(pagy: @pagy) %>
-    <p class="govuk-body">
-      Showing Agreements <%= @pagy.from %> to <%= @pagy.to %> of <%= @pagy.count %>.
-    </p>
+  <%= govuk_pagination(pagy: @pagy) %>
+  <p class="govuk-body">
+    Showing Agreements <%= @pagy.from %> to <%= @pagy.to %> of <%= @pagy.count %>.
+  </p>
 
-  <% else %>
-    <p class="govuk-body">No matching records found</p>
-  <% end %>
+<% else %>
+  <h2 class="govuk-heading-m">Records not found</h2>
+  <p class="govuk-body">No records were found that match the current filter</p>
 <% end %>
