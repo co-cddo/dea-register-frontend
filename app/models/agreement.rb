@@ -10,6 +10,10 @@ class Agreement < AirTable
   has_many :agreement_processors, dependent: :delete_all
   has_many :processors, through: :agreement_processors
 
+  def self.isa_statuses
+    pluck(Arel.sql("fields -> 'ISA_status'")).uniq
+  end
+
   def id_and_name
     [fields["ID"], name].select(&:present?).join(" - ")
   end
