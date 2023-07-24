@@ -1,0 +1,68 @@
+# This workflow will install a prebuilt Ruby version, install dependencies, and
+# run tests and linters.
+name: "Ruby on Rails CI"
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11-alpine
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: rails_test
+          POSTGRES_USER: rails
+          POSTGRES_PASSWORD: password
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+      AIRTABLE_API_KEY: ${{secrets.AIRTABLE_API_KEY}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Cofigure JavaScript environment
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Run install
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install # will run `yarn install` command
+
+      # Configure Ruby and Rails environment
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@250fcd6a742febb1123a77a841497ccaa8b9e939 # v1.152.0
+        with:
+          bundler-cache: true
+
+      # Add or replace database setup steps here
+      - name: Set up database schema
+        run: bin/rails db:schema:load
+
+      - name: Build assets
+        run: bundle exec rails dartsass:build
+
+      # Add or replace test runners here
+      - name: Run tests
+        run: bin/rake
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@250fcd6a742febb1123a77a841497ccaa8b9e939 # v1.152.0
+        with:
+          bundler-cache: true
+      # Add or replace any other lints here
+      - name: Lint Ruby files
+        run: bin/lint
