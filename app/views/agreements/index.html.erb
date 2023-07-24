@@ -17,15 +17,15 @@
       table.with_head do |head|
         head.with_row do |row|
           row.with_cell(
-            text: sort_button(:id, root_path, label: 'ID', params: params.to_unsafe_hash.slice(:controller_filter, :isa_status, :first_name)),
+            text: sort_button(:id, root_path, label: 'ID', params: @applied_filters),
             html_attributes: { 'aria-sort' => sort_direction_for(:id) }
           )
           row.with_cell(
-            text: sort_button(:name, root_path, params: params.to_unsafe_hash.slice(:controller_filter, :isa_status, :first_name)),
+            text: sort_button(:name, root_path, params: @applied_filters),
             html_attributes: { 'aria-sort' => sort_direction_for(:name) }
           )
           row.with_cell(
-            text: sort_button(:start_date, root_path, label: 'Start Date', params: params.to_unsafe_hash.slice(:controller_filter, :isa_status, :first_name)),
+            text: sort_button(:start_date, root_path, label: 'Start Date', params: @applied_filters),
             html_attributes: { 'aria-sort' => sort_direction_for(:start_date) }
           )
           row.with_cell(

@@ -14,10 +14,10 @@ module ApplicationHelper
       label,
       path,
       method: :get,
-      params: {
+      params: params.merge(
         sort_by: field,
         direction:,
-      }.merge(params),
+      ),
     )
   end
 

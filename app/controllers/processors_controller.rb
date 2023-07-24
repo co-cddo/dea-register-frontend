@@ -1,8 +1,8 @@
 class ProcessorsController < ApplicationController
   # GET /processors
   def index
-    processors = Processor.all
-    processors = Processor.where_first_letter(first_letter) if first_letter
+    processors = Processor.order(:name)
+    processors = processors.where_first_letter(first_letter) if first_letter
 
     @pagy, @processors = pagy(processors)
   end

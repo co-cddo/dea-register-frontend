@@ -1,7 +1,7 @@
 class AgreementsController < ApplicationController
-  def index
-    @control_people = ControlPerson.order(:name).pluck(:name, :id)
+  before_action :control_people, :applied_filters, only: :index
 
+  def index
     agreements = control_person ? control_person.agreements : Agreement.all
     agreements = agreements.where_first_letter(first_letter) if first_letter
     agreements = agreements.where("fields ->> 'ISA_status' = :status", status: isa_status) if isa_status
@@ -43,5 +43,15 @@ private
 
   def isa_status
     @isa_status ||= params[:isa_status].presence
+  end
+
+  def control_people
+    @control_people ||= ControlPerson.order(:name).pluck(:name, :id)
+  end
+
+  def applied_filters
+    @applied_filters ||= params.to_unsafe_hash.slice(
+      :controller_filter, :isa_status, :first_letter, :sort_by, :direction
+    ).select { |_k, v| v.present? }
   end
 end
