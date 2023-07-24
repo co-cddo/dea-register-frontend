@@ -27,52 +27,42 @@
 
         </div>
 
-        <% if @first_letter %>
-          <h3 class="govuk-heading-s govuk-!-margin-bottom-0">First Letter</h3>
+        <%= render(
+              'filter_output',
+              variable: @first_letter,
+              label: 'First Letter',
+              params_to_clear: @applied_filters.except(:first_letter)
+            ) %>
 
-          <ul class="moj-filter-tags">
+        <%= render(
+              'filter_output',
+              variable: @control_person,
+              label: 'Controller',
+              tag_text: @control_person&.name,
+              params_to_clear: @applied_filters.except(:controller_filter)
+            )%>
 
-            <li class="moj-filter__tag"><%= @first_letter %></li>
+        <%= render(
+              'filter_output',
+              variable: @isa_status,
+              label: 'ISA Status',
+              params_to_clear: @applied_filters.except(:isa_status)
+              )%>
 
-          </ul>
-        <% end %>
-
-        <% if @control_person %>
-          <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Controller</h3>
-
-          <ul class="moj-filter-tags">
-
-            <li class="moj-filter__tag"><%= @control_person.name %></li>
-
-          </ul>
-        <% end %>
-
-        <% if @isa_status %>
-          <h3 class="govuk-heading-s govuk-!-margin-bottom-0">ISA Status</h3>
-
-          <ul class="moj-filter-tags">
-
-            <li class="moj-filter__tag"><%= @isa_status %></li>
-
-          </ul>
-        <% end %>
-
-        <% if params[:sort_by].present? %>
-          <h3 class="govuk-heading-s govuk-!-margin-bottom-0">Sort by</h3>
-
-          <ul class="moj-filter-tags">
-
-            <li class="moj-filter__tag"><%= params[:sort_by].humanize %> <%= params[:direction] %></li>
-
-          </ul>
-        <% end %>
+        <%= render(
+              'filter_output',
+              variable: params[:sort_by].present?,
+              label: 'Sort by',
+              tag_text: "#{params[:sort_by]} #{params[:direction]}",
+              params_to_clear: @applied_filters.except(:sort_by, :direction)
+            ) %>
       </div>
     <% end %>
 
     <div class="moj-filter__options">
       <%= form_tag(root_path, method: :get) do %>
-        <%= hidden_field_tag :sort_by, params[:sort_by] %>
-        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag(:sort_by, params[:sort_by]) if params[:sort_by].present? %>
+        <%= hidden_field_tag(:direction, params[:direction]) if params[:direction].present? %>
 
         <button class="govuk-button" data-module="govuk-button" data-test-id="submit-button">
           Apply filters
@@ -80,8 +70,8 @@
 
 
         <div class="govuk-form-group">
-          <%= render 'shared/az_nav', applied_filters: params.to_unsafe_hash.slice(:controller_filter, :isa_status) %>
-          <%= hidden_field_tag :first_letter, params[:first_letter] %>
+          <%= render 'shared/az_nav', applied_filters: @applied_filters %>
+          <%= hidden_field_tag(:first_letter, params[:first_letter]) if params[:first_letter].present? %>
         </div>
 
         <div class="govuk-form-group">

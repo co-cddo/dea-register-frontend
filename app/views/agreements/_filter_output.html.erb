@@ -1,0 +1,12 @@
+<% tag_text ||= variable %>
+<% if variable %>
+  <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= label %></h3>
+
+  <ul class="moj-filter-tags">
+
+    <li>
+      <%= link_to tag_text, params_to_clear, class: "moj-filter__tag" %>
+    </li>
+
+  </ul>
+<% end %>
