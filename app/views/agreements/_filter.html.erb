@@ -27,43 +27,45 @@
 
         </div>
 
-        <%= render(
-              'filter_output',
-              variable: @control_person,
-              label: 'Controller',
-              tag_text: @control_person&.name,
-              params_to_clear: @applied_filters.except(:controller_filter)
-            ) %>
+        <div class="output-for-filters">
+          <%= render(
+                'filter_output',
+                variable: @control_person,
+                label: 'Controller',
+                tag_text: @control_person&.name,
+                params_to_clear: @applied_filters.except(:controller_filter)
+              ) %>
 
-        <%= render(
-              'filter_output',
-              variable: @power,
-              label: 'Power',
-              tag_text: @power&.name,
-              params_to_clear: @applied_filters.except(:power_filter)
-            ) %>
+          <%= render(
+                'filter_output',
+                variable: @power,
+                label: 'Power',
+                tag_text: @power&.name,
+                params_to_clear: @applied_filters.except(:power_filter)
+              ) %>
 
-        <%= render(
-              'filter_output',
-              variable: @isa_status,
-              label: 'ISA Status',
-              params_to_clear: @applied_filters.except(:isa_status)
-            ) %>
+          <%= render(
+                'filter_output',
+                variable: @isa_status,
+                label: 'ISA Status',
+                params_to_clear: @applied_filters.except(:isa_status)
+              ) %>
 
-        <%= render(
-              'filter_output',
-              variable: params[:sort_by].present?,
-              label: 'Sort by',
-              tag_text: "#{params[:sort_by]} #{params[:direction]}",
-              params_to_clear: @applied_filters.except(:sort_by, :direction)
-            ) %>
+          <%= render(
+                'filter_output',
+                variable: params[:sort_by].present?,
+                label: 'Sort by',
+                tag_text: "#{params[:sort_by]} #{params[:direction]}",
+                params_to_clear: @applied_filters.except(:sort_by, :direction)
+              ) %>
 
-        <%= render(
-              'filter_output',
-              variable: @first_letter,
-              label: 'First Letter',
-              params_to_clear: @applied_filters.except(:first_letter)
-            ) %>
+          <%= render(
+                'filter_output',
+                variable: @first_letter,
+                label: 'First Letter',
+                params_to_clear: @applied_filters.except(:first_letter)
+              ) %>
+        </div>
       </div>
     <% end %>
 

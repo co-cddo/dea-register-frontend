@@ -6,7 +6,9 @@
     <ul class="moj-filter-tags">
 
       <li>
-        <%= link_to tag_text, params_to_clear, class: "moj-filter__tag" %>
+        <%= link_to(params_to_clear, class: "moj-filter__tag") do %>
+          <span class="govuk-visually-hidden">Remove this filter</span><%= tag_text %>
+        <% end %>
       </li>
 
     </ul>
