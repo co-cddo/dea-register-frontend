@@ -1,8 +1,12 @@
 class AgreementsController < ApplicationController
-  before_action :control_people, :applied_filters, only: :index
+  before_action :control_people, :applied_filters, :powers, only: :index
 
   def index
     agreements = control_person ? control_person.agreements : Agreement.all
+
+    # Using two queries rather than join as join causes ambiguous column references with fields queries that follow
+    agreements = agreements.where(id: [power.agreements.pluck(:id)]) if power
+
     agreements = agreements.where_first_letter(first_letter) if first_letter
     agreements = agreements.where("fields ->> 'ISA_status' = :status", status: isa_status) if isa_status
 
@@ -41,17 +45,27 @@ private
     @control_person ||= ControlPerson.find(params[:controller_filter])
   end
 
-  def isa_status
-    @isa_status ||= params[:isa_status].presence
-  end
-
   def control_people
     @control_people ||= ControlPerson.order(:name).pluck(:name, :id)
   end
 
+  def isa_status
+    @isa_status ||= params[:isa_status].presence
+  end
+
+  def power
+    return if params[:power_filter].blank?
+
+    @power ||= Power.find(params[:power_filter])
+  end
+
+  def powers
+    @powers ||= Power.order(:name).pluck(:name, :id)
+  end
+
   def applied_filters
     @applied_filters ||= params.to_unsafe_hash.slice(
-      :controller_filter, :isa_status, :first_letter, :sort_by, :direction
+      :controller_filter, :power_filter, :isa_status, :first_letter, :sort_by, :direction
     ).select { |_k, v| v.present? }
   end
 end

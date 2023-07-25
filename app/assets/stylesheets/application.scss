@@ -3,4 +3,12 @@
 
 @import "sortable";
 @import "az_nav";
-@import "moj-frontend.min"
+@import "moj-frontend.min";
+
+.filter-output {
+  display: inline-block;
+  vertical-align:top;
+  max-width: 25rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}

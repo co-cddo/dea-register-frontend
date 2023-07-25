@@ -65,6 +65,22 @@ RSpec.describe "Agreements", type: :request do
       end
     end
 
+    context "with power filter" do
+      let(:power_agreement) { create :power_agreement, agreement: }
+      let(:power) { power_agreement.power }
+
+      it "displays link to matching agreements" do
+        get root_path, params: { power_filter: power.id }
+        expect(response.body).to include(agreement_path(agreement))
+      end
+
+      it "does not display links to other agrements" do
+        get root_path, params: { power_filter: power.id }
+        expect(response.body).not_to include(agreement_path(agreement_b))
+        expect(response.body).not_to include(agreement_path(agreement_c))
+      end
+    end
+
     context "when sorting present" do
       let(:html) { Nokogiri::HTML(response.body) }
 

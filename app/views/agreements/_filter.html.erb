@@ -8,7 +8,7 @@
 
   </div>
 
-  <% if @first_letter || @control_person || @isa_status || params[:sort_by].present? %>
+  <% if @first_letter || @control_person || @isa_status || @power || params[:sort_by].present? %>
     <div class="moj-filter__content">
 
       <div class="moj-filter__selected">
@@ -29,25 +29,26 @@
 
         <%= render(
               'filter_output',
-              variable: @first_letter,
-              label: 'First Letter',
-              params_to_clear: @applied_filters.except(:first_letter)
-            ) %>
-
-        <%= render(
-              'filter_output',
               variable: @control_person,
               label: 'Controller',
               tag_text: @control_person&.name,
               params_to_clear: @applied_filters.except(:controller_filter)
-            )%>
+            ) %>
+
+        <%= render(
+              'filter_output',
+              variable: @power,
+              label: 'Power',
+              tag_text: @power&.name,
+              params_to_clear: @applied_filters.except(:power_filter)
+            ) %>
 
         <%= render(
               'filter_output',
               variable: @isa_status,
               label: 'ISA Status',
               params_to_clear: @applied_filters.except(:isa_status)
-              )%>
+            ) %>
 
         <%= render(
               'filter_output',
@@ -55,6 +56,13 @@
               label: 'Sort by',
               tag_text: "#{params[:sort_by]} #{params[:direction]}",
               params_to_clear: @applied_filters.except(:sort_by, :direction)
+            ) %>
+
+        <%= render(
+              'filter_output',
+              variable: @first_letter,
+              label: 'First Letter',
+              params_to_clear: @applied_filters.except(:first_letter)
             ) %>
       </div>
     <% end %>
@@ -81,6 +89,16 @@
           <select class="govuk-select" id="controller_filter" name="controller_filter">
             <%= content_tag :option, 'Any', value: '' %>
             <%= options_for_select(@control_people, selected: params[:controller_filter]) %>
+          </select>
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="power_filter">
+            Power
+          </label>
+          <select class="govuk-select" id="power_filter" name="power_filter">
+            <%= content_tag :option, 'Any', value: '' %>
+            <%= options_for_select(@powers, selected: params[:power_filter]) %>
           </select>
         </div>
 
