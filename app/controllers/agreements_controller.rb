@@ -10,7 +10,9 @@ class AgreementsController < ApplicationController
     agreements = agreements.where_first_letter(first_letter) if first_letter
     agreements = agreements.where("fields ->> 'ISA_status' = :status", status: isa_status) if isa_status
 
-    agreements = agreements.order(sort_by => direction)
+    # Using reorder because Agreement has a default scope that sets the order
+    # Using unscoped would break the `control_person.agreements` association
+    agreements = agreements.reorder(sort_by => direction)
 
     @pagy, @agreements = pagy(agreements)
   end

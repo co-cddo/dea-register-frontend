@@ -1,6 +1,8 @@
 class Agreement < AirTable
   self.air_table_name = "Information Sharing Agreements"
 
+  default_scope { order(Arel.sql("(fields ->> 'ID')::Integer")) }
+
   has_many :power_agreements, dependent: :delete_all
   has_many :powers, through: :power_agreements
 
