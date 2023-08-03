@@ -107,10 +107,10 @@ shared_examples_for "is_air_table" do
         expect { populate }.to change(described_class, :count).by(1)
       end
 
-      it "only uses the second part to populate the name attribute" do
+      it "Uses the name as it is but strips off leading/trailing spaces" do
         populate
         record = described_class.last
-        expect(record.name).to eq(name)
+        expect(record.name).to eq(name.strip)
       end
     end
 

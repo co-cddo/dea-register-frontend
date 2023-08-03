@@ -50,11 +50,11 @@ class AirTable < ApplicationRecord
 
           instance = find_or_initialize_by(record_id: record[:id])
 
-          name = record.dig(:fields, :name) || record.dig(:fields, :Name)
+          name = record.dig(:fields, :name) || record.dig(:fields, :Name) || ""
 
           # If name divided in two by a colon only use the last part in the instance name
-          name = name.split(":").last.strip if name&.count(":") == 1
-          instance.name = name
+          name = name.split(":").last if name&.count(":") == 1
+          instance.name = name.strip
 
           instance.fields = record[:fields]
           instance.save!
