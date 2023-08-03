@@ -1,24 +1,57 @@
-# README
+# DEA Register
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application provides a Register of Information sharing agreements under chapters 1, 2, 3 and 4 of part 5 of the Digital Economy Act 2017.
 
-Things you may want to cover:
+## Airtable data
 
-* Ruby version
+The source data is stored in an Airtable base store. The specific base is specified via a
+[Person Access Token](https://airtable.com/developers/web/api/authentication).
+See the AirTableApi service object for how this token is stored.
 
-* System dependencies
+### Local store
 
-* Configuration
+The main models in this application inherit from an `AirTable` class and are types of that class. So their data is
+stored in a single table: `air_tables`.
 
-* Database creation
+Most of the data specific to a particular model is stored in the `fields` attribute. This is a JSON object that
+holds the original data pulled from the Airtable source. This arrangement was chosen to lesson the likelihood that
+a change in the Airtable would break the application. If a field in the source Airtable is changed (specifically
+renamed) the data will no longer be displayed, but it should not break the application.
 
-* Database initialization
+### Population
 
-* How to run the test suite
+An Airtable model can be populated by calling its class method `populate`. This method is defined on the root `AirTable`
+class.
 
-* Services (job queues, cache servers, search engines, etc.)
+Join tables are used to manage the associated between models. These have their own `populate` class methods which
+are defined on each of the models
 
-* Deployment instructions
+Database seeding runs `populate` of all these models and populates their tables:
 
-* ...
+    rails db:seed
+
+If the database is empty, this will populate the tables with the current data in the Airtable. If the database
+is already populated, this process will update the data to match the current data. This includes deleting any
+records that have been deleted from Airtable.
+
+In production this task is run via a cron job and ensures that the application is regularly synchronised with
+the source data.
+
+### Search
+
+Searching is provided by the Postgres search tool PgSearch. See the Search Controller for details.
+
+## Maintenance
+
+The application tests use RSpec and can be run via the command `rspec`.
+
+Linting is provided by GOV.UK flavoured rubocop and can be run at the application root via the command `rubocop`.
+
+## Staging
+
+This application is hosted in Heroku for staging, and is set to deploy automatically on merging code to `main`
+
+## Contacts
+
+This application was built by Rob Nichols and the data is maintained by Sulaiman Saeed. Please contact them
+for information about the application.
