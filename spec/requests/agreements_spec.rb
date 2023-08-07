@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Agreements", type: :request do
   let(:fields) { { "Purpose" => Faker::Lorem.sentence } }
-  let!(:agreement) { create :agreement, name: "A", fields: fields.merge(ID: 2, Start_date: to_json_date(3.days.ago), ISA_status: "Completed") }
+  let!(:agreement) { create :agreement, name: "A", fields: fields.merge(ID: 2, End_date: to_json_date(3.days.ago), ISA_status: "Completed") }
 
   describe "GET root (index)" do
-    let!(:agreement_b) { create :agreement, name: "B", fields: { ID: 1, Start_date: to_json_date(1.day.ago), ISA_status: "Completed" } }
-    let!(:agreement_c) { create :agreement, name: "C", fields: { ID: 3, Start_date: to_json_date(2.days.ago), ISA_status: "Active" } }
+    let!(:agreement_b) { create :agreement, name: "B", fields: { ID: 1, End_date: to_json_date(1.day.ago), ISA_status: "Completed" } }
+    let!(:agreement_c) { create :agreement, name: "C", fields: { ID: 3, End_date: to_json_date(2.days.ago), ISA_status: "Active" } }
 
     it "returns http success" do
       get root_path
@@ -84,13 +84,13 @@ RSpec.describe "Agreements", type: :request do
     context "when sorting present" do
       let(:html) { Nokogiri::HTML(response.body) }
 
-      it "sorts by start date" do
-        get root_path, params: { sort_by: :start_date, direction: :ascending }
+      it "sorts by end date" do
+        get root_path, params: { sort_by: :end_date, direction: :ascending }
         expect(html.css(".agreement-name a").map(&:inner_html)).to eq(%w[A C B])
       end
 
-      it "sorts by start date descending" do
-        get root_path, params: { sort_by: :start_date, direction: :descending }
+      it "sorts by end date descending" do
+        get root_path, params: { sort_by: :end_date, direction: :descending }
         expect(html.css(".agreement-name a").map(&:inner_html)).to eq(%w[B C A])
       end
 

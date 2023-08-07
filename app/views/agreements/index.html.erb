@@ -24,8 +24,8 @@
             html_attributes: { 'aria-sort' => sort_direction_for(:name) }
           )
           row.with_cell(
-            text: sort_button(:start_date, root_path, label: 'Start Date', params: @applied_filters),
-            html_attributes: { 'aria-sort' => sort_direction_for(:start_date) }
+            text: sort_button(:end_date, root_path, label: 'End Date', params: @applied_filters),
+            html_attributes: { 'aria-sort' => sort_direction_for(:end_date) }
           )
           row.with_cell(
             text: 'ISA status'
@@ -38,7 +38,7 @@
           body.with_row do |row|
             row.with_cell(text: agreement.fields['ID'], html_attributes: { class: 'agreement-id' })
             row.with_cell(text: link_to(agreement.name, agreement, class: "govuk-link"), html_attributes: { class: 'agreement-name' })
-            row.with_cell(text: agreement.fields['Start_date'], html_attributes: { class: 'agreement-start-date' })
+            row.with_cell(text: agreement.fields['End_date'], html_attributes: { class: 'agreement-end-date' })
             row.with_cell(text: agreement.fields['ISA_status'], html_attributes: { class: 'agreement-isa-status' })
           end
         end
