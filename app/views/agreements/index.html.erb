@@ -19,14 +19,21 @@
             text: sort_button(:id, root_path, label: 'ID', params: @applied_filters),
             html_attributes: { 'aria-sort' => sort_direction_for(:id) }
           )
+
           row.with_cell(
             text: sort_button(:name, root_path, params: @applied_filters),
             html_attributes: { 'aria-sort' => sort_direction_for(:name) }
           )
+
+          row.with_cell(
+            text: 'Power'
+          )
+
           row.with_cell(
             text: sort_button(:end_date, root_path, label: 'End Date', params: @applied_filters),
             html_attributes: { 'aria-sort' => sort_direction_for(:end_date) }
           )
+
           row.with_cell(
             text: 'ISA status'
           )
@@ -36,10 +43,30 @@
       table.with_body do |body|
         @agreements.each do |agreement|
           body.with_row do |row|
-            row.with_cell(text: agreement.fields['ID'], html_attributes: { class: 'agreement-id' })
-            row.with_cell(text: link_to(agreement.name, agreement, class: "govuk-link"), html_attributes: { class: 'agreement-name' })
-            row.with_cell(text: agreement.fields['End_date'], html_attributes: { class: 'agreement-end-date' })
-            row.with_cell(text: agreement.fields['ISA_status'], html_attributes: { class: 'agreement-isa-status' })
+            row.with_cell(
+              text: agreement.fields['ID'],
+              html_attributes: { class: 'agreement-id' }
+            )
+
+            row.with_cell(
+              text: link_to(agreement.name, agreement, class: "govuk-link"),
+              html_attributes: { class: 'agreement-name' }
+            )
+
+            row.with_cell(
+              text: agreement.powers.map {|p| link_to(p.name, p, class: "govuk-link")}.join(",").html_safe,
+              html_attributes: { class: 'agreement-powers' }
+            )
+
+            row.with_cell(
+              text: agreement.fields['End_date'],
+              html_attributes: { class: 'agreement-end-date' }
+            )
+
+            row.with_cell(
+              text: agreement.fields['ISA_status'],
+              html_attributes: { class: 'agreement-isa-status' }
+            )
           end
         end
       end
