@@ -3,6 +3,7 @@ class AgreementsController < ApplicationController
 
   def index
     agreements = control_person ? control_person.agreements : Agreement.all
+    agreements = agreements.includes(:powers)
 
     # Using two queries rather than join as join causes ambiguous column references with fields queries that follow
     agreements = agreements.where(id: [power.agreements.pluck(:id)]) if power
