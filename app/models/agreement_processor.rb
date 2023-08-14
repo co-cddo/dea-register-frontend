@@ -3,6 +3,7 @@ class AgreementProcessor < ApplicationRecord
   belongs_to :processor
 
   def self.populate
+    delete_all # Simplest way to ensure records deleted from Airtable do not persist in local database
     Agreement.find_each do |agreement|
       (agreement.fields["Processors"] || []).each do |processor_id|
         processor = Processor.find_by(record_id: processor_id)
