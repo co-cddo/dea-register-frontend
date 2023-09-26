@@ -5,7 +5,7 @@ This application provides a Register of Information sharing agreements under cha
 ## Airtable data
 
 The source data is stored in an Airtable base store. The specific base is specified via a
-[Person Access Token](https://airtable.com/developers/web/api/authentication).
+[Personal Access Token](https://airtable.com/developers/web/api/authentication).
 See the AirTableApi service object for how this token is stored.
 
 ### Local store
@@ -42,6 +42,15 @@ the source data.
 Searching is provided by the Postgres search tool PgSearch. See the Search Controller for details.
 
 ## Maintenance
+
+Before this application will run successfully locally, the following actions will be required:
+
+- Obtain the current master.key and save it in `/config`. Or set up a new Rails credentials containing:
+
+      airtable_api_key: [Airetable Personal Access Token]
+
+- Run `yarn` to set up the JavaScript environment
+- Run 'rake dartsass:build' to build application.css
 
 The application tests use RSpec and can be run via the command `rspec`.
 
