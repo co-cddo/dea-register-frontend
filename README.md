@@ -58,7 +58,7 @@ Linting is provided by GOV.UK flavoured rubocop and can be run at the applicatio
 
 ## Staging
 
-This application is hosted in Heroku for staging, and is set to deploy automatically on merging code to `main`
+This application is hosted in Heroku for staging, and is set to deploy automatically on merging code to `main`. Note that there is a separate "heroku" environment used when hosting the app on Heroku.
 
 ## Production
 
