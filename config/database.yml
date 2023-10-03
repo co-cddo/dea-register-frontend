@@ -83,3 +83,10 @@ production:
   <<: *default
   database: dea_register_frontend
   url: <%= "postgres://postgres:#{ENV['POSTGRES_PASSWORD']}@db/dea_register_frontend" %>
+
+
+heroku:
+  <<: *default
+  database: dea_register_frontend_production
+  username: data_connect
+  password: <%= ENV["DEA_REGISTER_FRONTEND_DATABASE_PASSWORD"] %>
