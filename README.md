@@ -60,6 +60,14 @@ Linting is provided by GOV.UK flavoured rubocop and can be run at the applicatio
 
 This application is hosted in Heroku for staging, and is set to deploy automatically on merging code to `main`
 
+## Production
+
+This application is containerised via docker, for use in production. To run the container use:
+
+    AIRTABLE_API_KEY=[airtable_api_key] docker-compose up --build
+
+Where `[airtable_api_key]` is the airtable Personal Access Token (see above)
+
 ## Contacts
 
 This application was built by Rob Nichols and the data is maintained by Sulaiman Saeed. Please contact them
