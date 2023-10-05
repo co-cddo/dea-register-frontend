@@ -64,7 +64,7 @@ This application is hosted in Heroku for staging, and is set to deploy automatic
 
 This application is containerised via docker, for use in production. To run the container use:
 
-    AIRTABLE_API_KEY=[airtable_api_key] docker-compose up --build
+    AIRTABLE_API_KEY=[airtable_api_key] RAILS_MASTER_KEY=[random uuid] docker-compose up --build
 
 Where `[airtable_api_key]` is the airtable Personal Access Token (see above)
 
