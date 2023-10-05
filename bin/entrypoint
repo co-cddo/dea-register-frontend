@@ -3,5 +3,5 @@ set -e
 
 export RAILS_ENV=production
 
-bundle exec rails db:migrate db:seed dartsass:build
+bundle exec rails db:migrate db:seed javascript:build assets:precompile
 rails server -b 0.0.0.0
