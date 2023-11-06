@@ -81,6 +81,20 @@ shared_examples_for "is_air_table" do
       end
     end
 
+    context "when record has draft sync status" do
+      let(:fields) do
+        {
+          name:,
+          foo: "bar",
+          Sync_Status: "Draft",
+        }
+      end
+
+      it "does not create a record" do
+        expect { populate }.not_to change(described_class, :count)
+      end
+    end
+
     context "when name has two parts separated by a colon" do
       let(:first_part) { Faker::Lorem.sentence }
       let(:second_part) { Faker::Company.name }

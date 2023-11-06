@@ -47,6 +47,7 @@ class AirTable < ApplicationRecord
         data = AirTableApi.data_for(air_table_path, query:)
         data[:records].each do |record|
           next if record[:fields].empty?
+          next if is_draft?(record)
 
           instance = find_or_initialize_by(record_id: record[:id])
 
@@ -68,6 +69,13 @@ class AirTable < ApplicationRecord
     def air_table_path
       table_id = AirTableTable.id_for_name(air_table_name)
       "#{AirTableBase.base_id}/#{table_id}"
+    end
+
+    def is_draft?(record)
+      sync_status = record.dig(:fields, :Sync_Status)
+      return if sync_status.blank?
+
+      sync_status.downcase == "draft"
     end
   end
 end
