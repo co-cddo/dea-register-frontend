@@ -7,7 +7,7 @@ class AgreementProcessor < ApplicationRecord
     Agreement.find_each do |agreement|
       (agreement.fields["Processors"] || []).each do |processor_id|
         processor = Processor.find_by(record_id: processor_id)
-        find_or_create_by! agreement:, processor:
+        find_or_create_by!(agreement:, processor:) if processor.present?
       end
     end
   end

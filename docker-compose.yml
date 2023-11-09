@@ -14,6 +14,7 @@ services:
     environment:
       <<: *compose_env
       AIRTABLE_API_KEY: $AIRTABLE_API_KEY
+      RAILS_MASTER_KEY: $RAILS_MASTER_KEY
   db:
     image: postgres:12
     environment:
