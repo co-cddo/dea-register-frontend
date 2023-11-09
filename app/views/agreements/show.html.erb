@@ -26,7 +26,7 @@
   <% if association.present? %>
     <h2 class="govuk-heading-m"><%= name.to_s.humanize %></h2>
 
-    <ul class="govuk-list">
+    <ul class="govuk-list govuk-list">
     <% association.each do |model| %>
       <li>
         <%= link_to model.name, model, class: "govuk-link" %>

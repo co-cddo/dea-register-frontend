@@ -2,7 +2,7 @@
   <% if association.present? %>
     <h2 class="govuk-heading-m"><%= name.to_s.humanize %></h2>
 
-    <ul class="govuk-list">
+    <ul class="govuk-list govuk-list--spaced">
     <% association.each do |model| %>
       <% label = model.is_a?(Agreement) ? model.id_and_name : model.name %>
       <li>
