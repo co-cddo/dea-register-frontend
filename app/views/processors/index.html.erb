@@ -7,7 +7,7 @@
 <%= az_content(@first_letter) do %>
   <% if @processors.present? %>
 
-  <ul class="govuk-list">
+  <ul class="govuk-list govuk-list--spaced">
     <% @processors.each do |processor| %>
       <li>
         <%= link_to processor.name, processor, class: "govuk-link" %>
