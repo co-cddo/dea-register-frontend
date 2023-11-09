@@ -7,7 +7,7 @@
 <%= az_content(@first_letter) do %>
   <% if @control_people.present? %>
 
-    <ul class="govuk-list">
+    <ul class="govuk-list govuk-list--spaced">
     <% @control_people.each do |control_person| %>
       <li>
         <%= link_to control_person.name, control_person, class: "govuk-link" %>

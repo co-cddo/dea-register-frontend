@@ -3,10 +3,10 @@
 <h1>Search results</h1>
 <p>Searching for: "<%= params[:q] %>"</p>
 
-<ul class="govuk-list">
+<ul class="govuk-list govuk-list--spaced">
   <% @search.map(&:searchable).each do |object| %>
     <li>
-      <%= link_to "#{object.type} : #{object.name}", object %>
+      <%= link_to "#{object.model_name.human} : #{object.name}", object %>
     </li>
   <% end %>
 </ul>
