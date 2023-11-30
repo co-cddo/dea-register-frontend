@@ -7,6 +7,10 @@ module ApplicationHelper
     [site_name, detail].select(&:present?).join(" - ")
   end
 
+  def non_breaking_date(text)
+    text.gsub("-", "&#8209;").html_safe
+  end
+
   def sort_button(field, path, label: nil, params: {})
     label ||= field.to_s.humanize
     direction = button_sort_direction(field)
