@@ -64,12 +64,12 @@
             )
 
             row.with_cell(
-              text: agreement.fields['Start_date'],
+              text: non_breaking_date(agreement.fields['Start_date']),
               html_attributes: { class: 'agreement-start-date' }
             )
 
             row.with_cell(
-              text: agreement.fields['End_date'],
+              text: non_breaking_date(agreement.fields['End_date']),
               html_attributes: { class: 'agreement-end-date' }
             )
 
