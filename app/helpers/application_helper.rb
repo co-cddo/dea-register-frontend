@@ -8,6 +8,8 @@ module ApplicationHelper
   end
 
   def non_breaking_date(text)
+    return text if text.blank?
+
     text.gsub("-", "&#8209;").html_safe
   end
 
