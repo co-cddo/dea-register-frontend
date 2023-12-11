@@ -118,4 +118,21 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe ".non_breaking_date" do
+    let(:date) { "1-2" }
+    let(:non_breaking_date) { "&#8209;" }
+
+    it "replaces hyphens with non-breaking hyphens" do
+      expect(helper.non_breaking_date(date)).to eq("1#{non_breaking_date}2")
+    end
+
+    context "with a nil date" do
+      let(:date) { nil }
+
+      it "returns nil" do
+        expect(helper.non_breaking_date(date)).to be_nil
+      end
+    end
+  end
 end
