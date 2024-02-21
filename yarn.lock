@@ -140,7 +140,7 @@ esbuild@^0.17.19:
     "@esbuild/win32-ia32" "0.17.19"
     "@esbuild/win32-x64" "0.17.19"
 
-govuk-frontend@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.6.0.tgz#662b41f7c468bb5468441218c720f0b31c948cbd"
-  integrity sha512-pLJVHVvfsTmNDBH/YBCMyuqSMCQmOrNQXoThdcAzhXJVbuaWnGc1URvjOR7EJeZyOm101fHDjzTkTvpEy6zfiw==
+govuk-frontend@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.2.0.tgz#f8e0bf98b771b8ee1501fd45bbba24a091f3846d"
+  integrity sha512-beD3wztHpkKz6JUpPwnwop1ejb4rTFMPLCutKLCIDmUS4BPpW59ggVUfctsRqHd2Zjw9wxljdRdeIJ8AZFyyTw==
