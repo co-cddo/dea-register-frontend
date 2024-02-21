@@ -10,7 +10,7 @@ RSpec.describe AirTableApi, type: :service do
 
     before do
       stub_request(:get, url)
-        .with(headers: { "Authorization" => "Bearer #{described_class::API_KEY}" })
+        .with(headers: { "Authorization" => ["Bearer", described_class::API_KEY].select(&:present?).join(" ") })
         .to_return(body: payload.to_json)
     end
 
