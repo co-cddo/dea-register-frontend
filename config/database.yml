@@ -82,7 +82,12 @@ test:
 production:
   <<: *default
   database: dea_register_frontend
-  url: <%= "postgres://postgres:#{ENV['POSTGRES_PASSWORD']}@db/dea_register_frontend" %>
+  # url: <%= "postgres://postgres:#{ENV['POSTGRES_PASSWORD']}@db/dea_register_frontend" %>
+  host: <%= ENV["POSTGRES_HOST"].presence || "db" %>
+  username: <%= ENV["POSTGRES_USERNAME"].presence || "postgres" %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  port: <%= ENV['POSTGRES_PORT'] || 5432 %>
+
 
 
 heroku:
