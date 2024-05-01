@@ -3,7 +3,7 @@
   <head>
     <title><%=
       page_title(
-        site_name: "DEA Register",
+        site_name: "Register of Information sharing agreements",
         additional: ([controller_name.humanize, params[:id]].compact.join(' - ') unless current_page?(root_path)),
         preferred: content_for(:page_title)
       )
@@ -18,7 +18,7 @@
 
   <body>
     <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
-    <%= govuk_header(service_name: "DEA Register") do |header|
+    <%= govuk_header(service_name: "Register of Information sharing agreements under chapters 1, 2, 3 and 4 of part 5 of the Digital Economy Act 2017") do |header|
           {
             Agreements: root_path,
             Powers: powers_path,
@@ -30,10 +30,6 @@
         end %>
 
     <div class="govuk-width-container ">
-      <%= govuk_phase_banner(
-            tag: { text: "Alpha" },
-            text: "This is a new service – your feedback will help us to improve it."
-          ) %>
       <main class="govuk-main-wrapper " id="main-content" role="main">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
