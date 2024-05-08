@@ -22,3 +22,7 @@ RUN gem install bundler && \
 
 # Copy the application code
 COPY . .
+
+EXPOSE 3000
+
+ENTRYPOINT ["bash", "bin/entrypoint"]

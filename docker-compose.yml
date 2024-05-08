@@ -10,13 +10,13 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    entrypoint: ["bash", 'bin/entrypoint']
+    #entrypoint: ["bash", 'bin/entrypoint']
     environment:
       <<: *compose_env
       AIRTABLE_API_KEY: $AIRTABLE_API_KEY
       RAILS_MASTER_KEY: $RAILS_MASTER_KEY
   db:
-    image: postgres:12
+    image: postgres:13
     environment:
       <<: *compose_env
       POSTGRES_USER: postgres
