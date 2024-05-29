@@ -3,7 +3,9 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
-results = [
+start_time = Time.zone.now
+
+[
   Agreement,
   ControlPerson,
   Processor,
@@ -17,9 +19,21 @@ results = [
   hash[model.to_s] = model.count
 end
 
-report = ["The following have been created:"]
-results.each { |n, c| report << "\t#{n} - #{c}" }
-report = report.join("\n")
+# Load historic update logs from previous system
+update_records = YAML.load_file(
+  Rails.root.join("db/seeds/update_record.yml"),
+  symbolize_names: true,
+)
+
+update_records.each do |record|
+  date = Date.parse(record[:date])
+  UpdateLog.where(from_seeds: true).find_or_create_by!(updated_on: date) do |update_log|
+    update_log.comment = record[:text]
+    update_log.from_seeds = true
+  end
+end
+
+report = LogUpdates.after(start_time)&.comment || "No changes made on seeding"
 
 # rubocop:disable Rails/Output
 puts report # This is sent to STOUT to provide feedback when seeding run at console
