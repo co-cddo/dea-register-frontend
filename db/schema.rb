@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_22_133034) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_28_130310) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,6 +73,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_133034) do
     t.bigint "control_person_id", null: false
     t.index ["control_person_id", "power_id"], name: "index_power_control_people_on_control_person_id_and_power_id"
     t.index ["power_id", "control_person_id"], name: "index_power_control_people_on_power_id_and_control_person_id"
+  end
+
+  create_table "update_logs", force: :cascade do |t|
+    t.date "updated_on"
+    t.string "comment"
+    t.boolean "from_seeds", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

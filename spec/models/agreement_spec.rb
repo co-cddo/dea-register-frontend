@@ -42,7 +42,7 @@ RSpec.describe Agreement, type: :model do
     end
 
     context "when id missing" do
-      let(:agreement) { create :agreement }
+      let(:agreement) { create :agreement, fields: {} }
       it "just returns the name" do
         expect(agreement.id_and_name).to eq(agreement.name)
       end

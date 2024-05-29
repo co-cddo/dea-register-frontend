@@ -2,6 +2,8 @@ FactoryBot.define do
   factory :agreement do
     name { Faker::Name.name }
     record_id { SecureRandom.uuid }
-    fields { { name: } }
+    sequence :fields do |n|
+      { name:, ID: n }
+    end
   end
 end

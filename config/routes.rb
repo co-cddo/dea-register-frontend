@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   resources :processors, only: %i[index show]
   resources :control_people, only: %i[index show], path: :controllers
   resources :search, only: [:index]
+  resources :update_logs, only: [:index]
 end

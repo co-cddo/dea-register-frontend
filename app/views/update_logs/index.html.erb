@@ -1,0 +1,14 @@
+<% page_title = "Update Log" %>
+
+<h1 class="govuk-heading-l">Record of updates</h1>
+
+<%=
+  govuk_summary_list do |summary_list|
+    @update_logs.each do |update_log|
+      summary_list.with_row do |row|
+        row.with_key(text: update_log.updated_on.strftime("%d %B %Y"))
+        row.with_value(text: update_log.comment)
+      end
+    end
+  end
+%>
