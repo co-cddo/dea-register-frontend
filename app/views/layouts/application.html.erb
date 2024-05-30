@@ -44,6 +44,14 @@
         </div>
       </main>
     </div>
-    <%= govuk_footer %>
+    <%= render GovukComponent::FooterComponent.new do |footer| %>
+      <%= footer.with_meta_html do %>
+        <% if latest_update %>
+          <p class="govuk-!-padding-top-2">
+            System last update <%= latest_update.updated_on.strftime("%d %B %Y") %>
+          </p>
+        <% end %>
+      <% end %>
+    <% end %>
   </body>
 </html>

@@ -44,6 +44,10 @@ module ApplicationHelper
     render "shared/az_content", content:, first_letter:
   end
 
+  def latest_update
+    @latest_update ||= UpdateLog.order(:updated_at).last
+  end
+
 private
 
   def button_sort_direction(field)
