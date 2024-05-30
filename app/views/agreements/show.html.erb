@@ -14,6 +14,12 @@
       <dd class="govuk-summary-list__value"><%= value %></dd>
     </div>
   <% end %>
+  <% if @agreement.created_at != @agreement.updated_at %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Updated</dt>
+      <dd class="govuk-summary-list__value"><%= @agreement.updated_at.strftime("%d %B %Y") %></dd>
+    </div>
+  <% end %>
 </dl>
 
 <% associations = {
