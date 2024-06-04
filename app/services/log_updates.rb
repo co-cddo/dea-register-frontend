@@ -17,13 +17,15 @@ class LogUpdates
 
   def report
     return unless changes?
-    return created_text if updated_ids.empty?
 
-    [
-      created_text,
-      "Additionally, entries with the following ID numbers have been updated:",
-      updated_ids.to_sentence,
-    ].join(" ")
+    report = []
+    report << created_text if number_created.positive?
+    report << updated_text if updated_ids.present?
+    report.join(" ")
+  end
+
+  def updated_text
+    "Entries with the following ID numbers have been updated: #{updated_ids.to_sentence}."
   end
 
   def created_text

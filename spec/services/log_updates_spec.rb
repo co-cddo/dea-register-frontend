@@ -59,7 +59,7 @@ RSpec.describe LogUpdates, type: :service do
       agreement
       subject # initialize after agreement creation
       agreement.update!(name: "Foo")
-      expect(subject.report).to eq("0 Agreements created. Additionally, entries with the following ID numbers have been updated: #{agreement.fields['ID']}")
+      expect(subject.report).to eq("Entries with the following ID numbers have been updated: #{agreement.fields['ID']}.")
     end
 
     it 'lists ids with "and" if multiple updated' do
@@ -75,7 +75,7 @@ RSpec.describe LogUpdates, type: :service do
       subject # initialize after creation of agreement to be updated
       create :agreement
       agreement.update!(name: "Foo")
-      expect(subject.report).to eq("1 Agreement created. Additionally, entries with the following ID numbers have been updated: #{agreement.fields['ID']}")
+      expect(subject.report).to eq("1 Agreement created. Entries with the following ID numbers have been updated: #{agreement.fields['ID']}.")
     end
   end
 
