@@ -1,4 +1,4 @@
-class ControlPerson < AirTable
+class ControlPerson < DataTable
   self.air_table_name = "Controllers"
 
   has_many :power_control_people, dependent: :delete_all

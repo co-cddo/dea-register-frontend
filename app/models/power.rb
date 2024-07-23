@@ -1,4 +1,4 @@
-class Power < AirTable
+class Power < DataTable
   self.air_table_name = "Power Disclosure"
 
   has_many :power_agreements

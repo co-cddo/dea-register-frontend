@@ -1,4 +1,4 @@
-class Agreement < AirTable
+class Agreement < DataTable
   self.air_table_name = "Information Sharing Agreements"
 
   default_scope { order(Arel.sql("(fields ->> 'ID')::Integer")) }
