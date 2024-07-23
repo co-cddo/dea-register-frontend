@@ -9,8 +9,8 @@ RSpec.describe "Searches", type: :request do
 
     context "with a search query" do
       let(:query) { "Foo bar" }
-      let!(:record) { create :air_table, name: "Foo #{Faker::Company.industry} bar" }
-      let!(:other) { create :air_table, name: "Something else" }
+      let!(:record) { create :data_table, name: "Foo #{Faker::Company.industry} bar" }
+      let!(:other) { create :data_table, name: "Something else" }
 
       it "returns http success" do
         get search_index_path, params: { q: query }
