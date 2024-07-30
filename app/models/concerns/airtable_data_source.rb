@@ -36,7 +36,7 @@ module AirtableDataSource
         name = name.split(":").last if name&.count(":") == 1
         instance.name = name.strip
 
-        instance.fields = record[:fields]
+        instance.fields = record[:fields].transform_keys(&:downcase)
         instance.save!
         created_ids << instance.id
       end

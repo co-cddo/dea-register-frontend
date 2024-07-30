@@ -9,7 +9,7 @@ class AgreementsController < ApplicationController
     agreements = agreements.where(id: [power.agreements.pluck(:id)]) if power
 
     agreements = agreements.where_first_letter(first_letter) if first_letter
-    agreements = agreements.where("fields ->> 'ISA_status' = :status", status: isa_status) if isa_status
+    agreements = agreements.where("fields ->> 'isa_status' = :status", status: isa_status) if isa_status
 
     # Using reorder because Agreement has a default scope that sets the order
     # Using unscoped would break the `control_person.agreements` association
@@ -27,9 +27,9 @@ private
   def sort_by
     options = {
       name: :name,
-      id: Arel.sql("(fields ->> 'ID')::Integer"),
-      end_date: Arel.sql("(fields ->> 'End_date')::timestamptz"),
-      start_date: Arel.sql("(fields ->> 'Start_date')::timestamptz"),
+      id: Arel.sql("(fields ->> 'id')::Integer"),
+      end_date: Arel.sql("(fields ->> 'end_date')::timestamptz"),
+      start_date: Arel.sql("(fields ->> 'start_date')::timestamptz"),
     }
 
     return options[:id] if params[:sort_by].blank?

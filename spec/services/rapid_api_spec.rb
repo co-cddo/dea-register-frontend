@@ -63,5 +63,16 @@ RSpec.describe RapidApi, type: :service do
         )
       end
     end
+
+    context "with no content" do
+      let(:data_response) { "" }
+      let(:status) { 204 }
+
+      it "raises an error" do
+        expect { rapid_api.output_for(:agreements) }.to raise_error(
+          described_class::RequestError, "Output failed: No content"
+        )
+      end
+    end
   end
 end

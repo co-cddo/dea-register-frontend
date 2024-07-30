@@ -35,7 +35,7 @@ RSpec.describe Agreement, type: :model do
   end
 
   describe "#id_and_name" do
-    let(:agreement) { create :agreement, name: "Foo", fields: { ID: "5" } }
+    let(:agreement) { create :agreement, name: "Foo", fields: { id: "5" } }
 
     it "returns the ID and name of the agreement" do
       expect(agreement.id_and_name).to eq("5 - Foo")
@@ -51,13 +51,13 @@ RSpec.describe Agreement, type: :model do
 
   describe ".isa_statuses" do
     subject(:isa_statuses) { described_class.isa_statuses }
-    let!(:others) { create_list :agreement, 2, fields: { ISA_status: "foo" } }
-    let!(:agreement) { create :agreement, fields: { ISA_status: "bar" } }
+    let!(:others) { create_list :agreement, 2, fields: { isa_status: "foo" } }
+    let!(:agreement) { create :agreement, fields: { isa_status: "bar" } }
 
     it "returns the existing ISA statuses" do
       expect(isa_statuses.size).to eq(2)
-      expect(isa_statuses).to include(agreement.fields["ISA_status"])
-      expect(isa_statuses).to include(others.first.fields["ISA_status"])
+      expect(isa_statuses).to include(agreement.fields["isa_status"])
+      expect(isa_statuses).to include(others.first.fields["isa_status"])
     end
   end
 end

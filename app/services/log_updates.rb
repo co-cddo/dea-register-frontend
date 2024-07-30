@@ -47,6 +47,6 @@ class LogUpdates
   def updated_ids
     @updated_ids ||= Agreement.where(updated_at: time..)
                               .where.not(created_at: time..)
-                              .pluck(Arel.sql("fields->'ID'"))
+                              .pluck(Arel.sql("fields->'id'"))
   end
 end

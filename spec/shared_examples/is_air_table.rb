@@ -43,6 +43,21 @@ shared_examples_for "is_air_table" do
       expect(record.fields).to eq(fields.stringify_keys)
     end
 
+    context "when keys are not downcase" do
+      let(:fields) do
+        {
+          name:,
+          Foo_Bar: "bar",
+        }
+      end
+
+      it "saves the fields with downcase keys" do
+        populate
+        record = described_class.last
+        expect(record.fields['foo_bar']).to eq(fields[:Foo_Bar])
+      end
+    end
+
     context "when an offset exists" do
       # Offset needs to be returned by first calls so is added to the initial data
       let(:offset) { SecureRandom.uuid }

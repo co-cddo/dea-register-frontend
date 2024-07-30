@@ -52,7 +52,7 @@
         @agreements.each do |agreement|
           body.with_row do |row|
             row.with_cell(
-              text: agreement.fields['ID'],
+              text: agreement.fields['id'],
               html_attributes: { class: 'agreement-id' }
             )
 
@@ -67,17 +67,17 @@
             )
 
             row.with_cell(
-              text: non_breaking_date(agreement.fields['Start_date']),
+              text: non_breaking_date(agreement.fields['start_date']),
               html_attributes: { class: 'agreement-start-date' }
             )
 
             row.with_cell(
-              text: non_breaking_date(agreement.fields['End_date']),
+              text: non_breaking_date(agreement.fields['end_date']),
               html_attributes: { class: 'agreement-end-date' }
             )
 
             row.with_cell(
-              text: agreement.fields['ISA_status'],
+              text: agreement.fields['isa_status'],
               html_attributes: { class: 'agreement-isa-status' }
             )
           end

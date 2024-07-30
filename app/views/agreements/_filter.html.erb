@@ -55,7 +55,7 @@
                 'filter_output',
                 variable: params[:sort_by].present?,
                 label: 'Sort by',
-                tag_text: "#{params.fetch(:sort_by, "").gsub('_', ' ').upcase} #{params[:direction]}",
+                tag_text: "#{params.fetch(:sort_by, "").gsub('_', ' ').titleize} (#{params[:direction]})",
                 params_to_clear: @applied_filters.except(:sort_by, :direction)
               ) %>
 

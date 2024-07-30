@@ -13,6 +13,7 @@
 # and store them in the data_tables table with the type 'FooBar'.
 class DataTable < ApplicationRecord
   extend AirtableDataSource
+  extend RapidDataSource
 
   include PgSearch::Model
   multisearchable against: %i[name fields]
@@ -22,7 +23,7 @@ class DataTable < ApplicationRecord
   }
 
   class << self
-    attr_accessor :air_table_name
+    attr_accessor :air_table_name, :rapid_table_name, :rapid_name_field
 
     def populate
       raise "Cannot run on root class - DataTable" if self == DataTable
