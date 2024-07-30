@@ -3,7 +3,7 @@ FactoryBot.define do
     name { Faker::Name.name }
     record_id { SecureRandom.uuid }
     sequence :fields do |n|
-      { name:, ID: n }
+      { name:, id: n }
     end
   end
 end

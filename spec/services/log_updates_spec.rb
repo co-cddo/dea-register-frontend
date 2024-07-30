@@ -59,14 +59,14 @@ RSpec.describe LogUpdates, type: :service do
       agreement
       subject # initialize after agreement creation
       agreement.update!(name: "Foo")
-      expect(subject.report).to eq("Entries with the following ID numbers have been updated: #{agreement.fields['ID']}.")
+      expect(subject.report).to eq("Entries with the following ID numbers have been updated: #{agreement.fields['id']}.")
     end
 
     it 'lists ids with "and" if multiple updated' do
       agreements = create_list :agreement, 3
       subject
       agreements.each_with_index { |a, i| a.update(name: "Foo #{i}") }
-      expect(subject.report).to include(agreements.last.fields["ID"].to_s)
+      expect(subject.report).to include(agreements.last.fields["id"].to_s)
       expect(subject.report).to match(/updated:\s\d+,\s\d+,\sand\s\d+/)
     end
 
@@ -75,7 +75,7 @@ RSpec.describe LogUpdates, type: :service do
       subject # initialize after creation of agreement to be updated
       create :agreement
       agreement.update!(name: "Foo")
-      expect(subject.report).to eq("1 Agreement created. Entries with the following ID numbers have been updated: #{agreement.fields['ID']}.")
+      expect(subject.report).to eq("1 Agreement created. Entries with the following ID numbers have been updated: #{agreement.fields['id']}.")
     end
   end
 
@@ -127,7 +127,7 @@ RSpec.describe LogUpdates, type: :service do
       agreement
       subject # initialize after agreement creation
       agreement.update!(name: "Foo")
-      expect(subject.updated_ids).to contain_exactly(agreement.fields["ID"])
+      expect(subject.updated_ids).to contain_exactly(agreement.fields["id"])
     end
   end
 end

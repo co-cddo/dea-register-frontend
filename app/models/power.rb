@@ -1,5 +1,6 @@
 class Power < DataTable
   self.air_table_name = "Power Disclosure"
+  self.rapid_table_name = :dea_upload_powers
 
   has_many :power_agreements
   has_many :agreements, through: :power_agreements

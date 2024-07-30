@@ -26,12 +26,15 @@ class RapidApi
 
   def output_for(dataset)
     response = data_conn.post("/api/datasets/transformed_dev/cddo_dea_register/#{dataset}/query")
+    raise(RequestError, "Output failed: No content") if response.body.blank?
 
     json = JSON.parse(response.body, symbolize_names: true)
+    raise(RequestError, "Output failed: #{json[:details]}") unless response.success?
 
-    return json if response.success?
+    json
 
-    raise(RequestError, "Output failed: #{json[:details]}")
+  rescue JSON::ParserError => e
+    raise(RequestError, "Output failed: Unable to parse JSON - #{e}")
   end
 
 private
