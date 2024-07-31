@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Agreement, type: :model do
-  it_behaves_like "is_air_table"
+  it_behaves_like "is_data_table"
 
   # make sure a base exists to avoid callout for base
   let!(:air_table_base) { create :air_table_base }

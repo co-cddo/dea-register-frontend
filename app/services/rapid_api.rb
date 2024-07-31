@@ -8,6 +8,10 @@ class RapidApi
 
   RequestError = Class.new(StandardError)
 
+  def self.output_for(dataset)
+    new.output_for(dataset)
+  end
+
   def access_token
     @access_token ||= begin
       response = auth_conn.post("/api/oauth2/token") do |req|
@@ -32,7 +36,6 @@ class RapidApi
     raise(RequestError, "Output failed: #{json[:details]}") unless response.success?
 
     json
-
   rescue JSON::ParserError => e
     raise(RequestError, "Output failed: Unable to parse JSON - #{e}")
   end

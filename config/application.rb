@@ -20,5 +20,7 @@ module DeaRegisterFrontend
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.data_source = ENV.fetch("DATA_SOURCE", :airtable).to_sym
   end
 end

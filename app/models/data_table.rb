@@ -28,7 +28,24 @@ class DataTable < ApplicationRecord
     def populate
       raise "Cannot run on root class - DataTable" if self == DataTable
 
-      populate_from_air_table
+      ids_of_created = data_from_source.map do |id, record|
+        record.transform_keys!(&:downcase)
+        instance = find_or_initialize_by(record_id: id)
+
+        name = record[:name]
+        name = name.split(":").last if name&.count(":") == 1
+        instance.name = name.strip
+
+        instance.fields = record
+        instance.save!
+        instance.id
+      end
+      # Remove records that no longer match any on the source system(assume deleted)
+      where.not(id: ids_of_created).destroy_all
+    end
+
+    def data_from_source
+      air_table_data_source? ? data_from_air_table : data_from_rapid
     end
 
     def search(text)
@@ -37,7 +54,9 @@ class DataTable < ApplicationRecord
 
   private
 
-
+    def air_table_data_source?
+      Rails.configuration.data_source == :airtable
+    end
 
     def is_draft?(record)
       sync_status = record.dig(:fields, :Sync_Status)

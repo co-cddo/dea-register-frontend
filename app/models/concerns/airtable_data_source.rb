@@ -15,9 +15,9 @@ module AirtableDataSource
     where(record_id: ids)
   end
 
-  def populate_from_air_table
+  def data_from_air_table
     data = {}
-    created_ids = []
+    records = {}
     # API returns 100 records at a time.
     # If there are more records, API returns an offset key that needs to be
     # passed into the next query
@@ -28,21 +28,10 @@ module AirtableDataSource
         next if record[:fields].empty?
         next if is_draft?(record)
 
-        instance = find_or_initialize_by(record_id: record[:id])
-
-        name = record.dig(:fields, :name) || record.dig(:fields, :Name) || ""
-
-        # If name divided in two by a colon only use the last part in the instance name
-        name = name.split(":").last if name&.count(":") == 1
-        instance.name = name.strip
-
-        instance.fields = record[:fields].transform_keys(&:downcase)
-        instance.save!
-        created_ids << instance.id
+        records[record[:id]] = record[:fields]
       end
     end
-    # Remove records that no longer match any on Airtable (assume deleted)
-    where.not(id: created_ids).destroy_all
+    records
   end
 
   def air_table_path
