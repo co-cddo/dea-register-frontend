@@ -91,6 +91,21 @@ shared_examples_for "is_data_table" do
         end
       end
 
+      context "when keys contain spaces" do
+        let(:fields) do
+          {
+            name:,
+            "Foo Bar": "bar",
+          }
+        end
+
+        it "saves the fields with downcase keys" do
+          populate
+          record = described_class.last
+          expect(record.fields["foo_bar"]).to eq("bar")
+        end
+      end
+
       context "when an offset exists" do
         # Offset needs to be returned by first calls so is added to the initial data
         let(:offset) { SecureRandom.uuid }

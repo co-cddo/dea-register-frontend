@@ -2,6 +2,6 @@
 
 <h1 class="govuk-heading-l"><%= @processor.name %></h1>
 
-<p class="govuk-body"><%= @processor.fields['Name'] %></p>
+<p class="govuk-body"><%= @processor.fields['name'] %></p>
 
 <%= render 'shared/associations', associations: { agreements: @processor.agreements } %>

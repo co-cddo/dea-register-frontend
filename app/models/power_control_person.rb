@@ -3,6 +3,8 @@ class PowerControlPerson < ApplicationRecord
   belongs_to :control_person
 
   def self.populate
+    return unless air_table_data_source?
+
     Power.find_each do |power|
       (power.fields["Person"] || []).each do |person_id|
         control_person = ControlPerson.find_by(record_id: person_id)

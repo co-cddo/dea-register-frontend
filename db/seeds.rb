@@ -3,6 +3,13 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
+
+# rubocop:disable Rails/Output
+starting = "Seeding data from #{Rails.configuration.data_source}"
+puts starting # This is sent to STOUT to provide feedback when seeding run at console
+Rails.logger.debug starting
+
+
 start_time = Time.zone.now
 
 [
@@ -35,7 +42,6 @@ end
 
 report = LogUpdates.after(start_time)&.comment || "No changes made on seeding"
 
-# rubocop:disable Rails/Output
 puts report # This is sent to STOUT to provide feedback when seeding run at console
 Rails.logger.debug report
 # rubocop:enable Rails/Output
