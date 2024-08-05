@@ -1,9 +1,9 @@
 class RapidApi
   RAPID_URL = "https://upload-cddo.data.gov.uk".freeze
   RAPID = {
-    client_id: ENV.fetch("RAPID_CLIENT_ID", Rails.application.credentials.rapid[:client_id]),
-    client_name: ENV.fetch("RAPID_CLIENT_NAME", Rails.application.credentials.rapid[:client_name]),
-    client_secret: ENV.fetch("RAPID_CLIENT_SECRET", Rails.application.credentials.rapid[:client_secret]),
+    client_id: ENV.fetch("RAPID_CLIENT_ID", Rails.application.credentials.rapid&.fetch(:client_id)),
+    client_name: ENV.fetch("RAPID_CLIENT_NAME", Rails.application.credentials.rapid&.fetch(:client_name)),
+    client_secret: ENV.fetch("RAPID_CLIENT_SECRET", Rails.application.credentials.rapid&.fetch(:client_secret)),
   }.freeze
 
   RequestError = Class.new(StandardError)
