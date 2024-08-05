@@ -18,6 +18,10 @@ class Agreement < DataTable
     pluck(Arel.sql("fields -> 'isa_status'")).uniq
   end
 
+  def self.find_by_id!(id)
+    find_by!("(fields ->> 'id')::Integer = ?", id.to_i)
+  end
+
   def id_and_name
     [fields["id"], name].select(&:present?).join(" - ")
   end

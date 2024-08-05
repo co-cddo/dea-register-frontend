@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Agreements", type: :request do
-  let(:fields) { { "Purpose" => Faker::Lorem.sentence } }
+  let(:fields) { { "purpose" => Faker::Lorem.sentence } }
   let!(:agreement) do
     create(
       :agreement,
@@ -171,7 +171,7 @@ RSpec.describe "Agreements", type: :request do
 
     it "displays agreement fields" do
       get agreement_path(agreement)
-      expect(response.body).to include(fields["Purpose"])
+      expect(response.body).to include(fields["purpose"])
     end
   end
 end

@@ -29,7 +29,7 @@ class DataTable < ApplicationRecord
       raise "Cannot run on root class - DataTable" if self == DataTable
 
       ids_of_created = data_from_source.map do |id, record|
-        record.transform_keys!(&:downcase)
+        record.transform_keys! { |r| r.to_s.parameterize(separator: '_').to_sym }
         instance = find_or_initialize_by(record_id: id)
 
         name = record[:name]
@@ -53,10 +53,6 @@ class DataTable < ApplicationRecord
     end
 
   private
-
-    def air_table_data_source?
-      Rails.configuration.data_source == :airtable
-    end
 
     def is_draft?(record)
       sync_status = record.dig(:fields, :Sync_Status)
