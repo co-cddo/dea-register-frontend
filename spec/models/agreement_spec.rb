@@ -3,6 +3,43 @@ require "rails_helper"
 RSpec.describe Agreement, type: :model do
   it_behaves_like "is_data_table"
 
+  describe ".populate" do # Note that most populate behavior is tested in the shared example 'is_data_table'
+    subject(:populate) { described_class.populate }
+
+    context "with rAPId source" do
+      let(:controller_name) { Faker::Name.name }
+      let(:id) { SecureRandom.uuid }
+      let(:data) do
+        {
+          1 => {
+            id:,
+            agreement_name: 'Foo',
+            foo: "yyy"
+          },
+          2 => {
+            id:,
+            agreement_name: 'Bar',
+            foo: "xxx"
+          }
+        }
+      end
+
+      before do
+        allow(Rails.configuration).to receive(:data_source).and_return(:rapid)
+        expect(RapidApi).to receive(:output_for).with(described_class.rapid_table_name).and_return(data)
+      end
+
+      it "assumes id is unique and does not create duplicates" do
+        expect { populate }.to change(described_class, :count).by(1)
+      end
+
+      it "saves agreement name of last entry to name" do
+        populate
+        expect(described_class.last.name).to eq('Bar')
+      end
+    end
+  end
+
   # make sure a base exists to avoid callout for base
   let!(:air_table_base) { create :air_table_base }
   let(:base_id) { AirTableBase.base_id }
