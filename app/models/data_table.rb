@@ -33,7 +33,11 @@ class DataTable < ApplicationRecord
         instance = find_or_initialize_by(record_id: id)
 
         name = record[:name]
+
+        next unless name.present?
+
         name = name.split(":").last if name&.count(":") == 1
+
         instance.name = name.strip
 
         instance.fields = record
