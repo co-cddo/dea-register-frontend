@@ -12,7 +12,10 @@ Rails.logger.debug starting
 
 start_time = Time.zone.now
 
-[
+# Clear the search cache
+PgSearch::Document.delete_all
+
+models = [
   Agreement,
   ControlPerson,
   Processor,
@@ -21,9 +24,12 @@ start_time = Time.zone.now
   PowerControlPerson,
   AgreementControlPerson,
   AgreementProcessor,
-].each_with_object({}) do |model, hash|
-  model.populate
-  hash[model.to_s] = model.count
+]
+
+models.each(&:populate)
+
+models.each do |model|
+  PgSearch::Multisearch.rebuild(model, clean_up: false) if model.respond_to?(:multisearchable)
 end
 
 # Load historic update logs from previous system
