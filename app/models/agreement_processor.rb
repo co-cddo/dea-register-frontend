@@ -8,7 +8,7 @@ class AgreementProcessor < ApplicationRecord
     def populate
       delete_all # Simplest way to ensure records deleted from Airtable do not persist in local database
 
-     air_table_data_source? ? populate_from_airtable : populate_from_rapid
+      air_table_data_source? ? populate_from_airtable : populate_from_rapid
     end
 
     def populate_from_airtable
@@ -21,7 +21,7 @@ class AgreementProcessor < ApplicationRecord
     end
 
     def populate_from_rapid
-      RapidApi.output_for(RAPID_TABLE_NAME).values.each do |record|
+      RapidApi.output_for(RAPID_TABLE_NAME).each_value do |record|
         agreement = Agreement.find_by_id!(record[:id])
         processor = Processor.find_by!(name: record[:processor_name])
 

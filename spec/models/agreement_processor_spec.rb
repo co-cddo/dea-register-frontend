@@ -53,9 +53,9 @@ RSpec.describe AgreementProcessor, type: :model do
       let(:data) do
         {
           SecureRandom.uuid => {
-            id: agreement.fields['id'],
-            processor_name: processor.name
-          }
+            id: agreement.fields["id"],
+            processor_name: processor.name,
+          },
         }
       end
 
@@ -77,7 +77,6 @@ RSpec.describe AgreementProcessor, type: :model do
         populate
         expect(processor.reload.agreements).to include(agreement)
       end
-
     end
   end
 end

@@ -13,14 +13,14 @@ RSpec.describe Agreement, type: :model do
         {
           1 => {
             id:,
-            agreement_name: 'Foo',
-            foo: "yyy"
+            agreement_name: "Foo",
+            foo: "yyy",
           },
           2 => {
             id:,
-            agreement_name: 'Bar',
-            foo: "xxx"
-          }
+            agreement_name: "Bar",
+            foo: "xxx",
+          },
         }
       end
 
@@ -35,7 +35,7 @@ RSpec.describe Agreement, type: :model do
 
       it "saves agreement name of last entry to name" do
         populate
-        expect(described_class.last.name).to eq('Bar')
+        expect(described_class.last.name).to eq("Bar")
       end
     end
   end

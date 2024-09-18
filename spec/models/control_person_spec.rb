@@ -17,7 +17,7 @@ RSpec.describe ControlPerson, type: :model do
           2 => {
             controller_name:,
             foo: "xxx",
-          }
+          },
         }
       end
 

@@ -57,9 +57,9 @@ RSpec.describe AgreementControlPerson, type: :model do
       let(:data) do
         {
           SecureRandom.uuid => {
-            id: agreement.fields['id'],
-            controller_name: control_person.name
-          }
+            id: agreement.fields["id"],
+            controller_name: control_person.name,
+          },
         }
       end
 
@@ -107,5 +107,4 @@ RSpec.describe AgreementControlPerson, type: :model do
       expect(database_record).to be_a(described_class)
     end
   end
-
 end
