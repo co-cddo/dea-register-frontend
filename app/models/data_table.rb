@@ -29,12 +29,12 @@ class DataTable < ApplicationRecord
       raise "Cannot run on root class - DataTable" if self == DataTable
 
       ids_of_created = data_from_source.map do |id, record|
-        record.transform_keys! { |r| r.to_s.parameterize(separator: '_').to_sym }
+        record.transform_keys! { |r| r.to_s.parameterize(separator: "_").to_sym }
         instance = find_or_initialize_by(record_id: id)
 
         name = record[:name]
 
-        next unless name.present?
+        next if name.blank?
 
         name = name.split(":").last if name&.count(":") == 1
 

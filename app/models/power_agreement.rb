@@ -21,7 +21,7 @@ class PowerAgreement < ApplicationRecord
     end
 
     def populate_from_rapid
-      RapidApi.output_for(RAPID_TABLE_NAME).values.each do |record|
+      RapidApi.output_for(RAPID_TABLE_NAME).each_value do |record|
         agreement = Agreement.find_by_id!(record[:id])
         power = Power.find_by!(name: record[:name])
 

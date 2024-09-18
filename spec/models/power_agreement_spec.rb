@@ -53,9 +53,9 @@ RSpec.describe PowerAgreement, type: :model do
       let(:data) do
         {
           SecureRandom.uuid => {
-            id: agreement.fields['id'],
-            name: power.name
-          }
+            id: agreement.fields["id"],
+            name: power.name,
+          },
         }
       end
 
@@ -77,7 +77,6 @@ RSpec.describe PowerAgreement, type: :model do
         populate
         expect(power.reload.agreements).to include(agreement)
       end
-
     end
   end
 end
