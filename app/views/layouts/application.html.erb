@@ -46,6 +46,7 @@
     </div>
     <%= render GovukComponent::FooterComponent.new do |footer| %>
       <%= footer.with_meta_html do %>
+        <!-- Version before change to rAPId -->
         <% if latest_update %>
           <p class="govuk-!-padding-top-2">
             System last update <%= latest_update.updated_on.strftime("%d %B %Y") %>
