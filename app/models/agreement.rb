@@ -1,5 +1,7 @@
-class Agreement < AirTable
+class Agreement < DataTable
   self.air_table_name = "Information Sharing Agreements"
+  self.rapid_table_name = :agreements
+  self.rapid_name_field = :agreement_name
 
   default_scope { order(Arel.sql("(fields ->> 'ID')::Integer")) }
 
@@ -13,10 +15,14 @@ class Agreement < AirTable
   has_many :processors, through: :agreement_processors
 
   def self.isa_statuses
-    pluck(Arel.sql("fields -> 'ISA_status'")).uniq
+    pluck(Arel.sql("fields -> 'isa_status'")).uniq
+  end
+
+  def self.find_by_id!(id)
+    find_by!("(fields ->> 'id')::Integer = ?", id.to_i)
   end
 
   def id_and_name
-    [fields["ID"], name].select(&:present?).join(" - ")
+    [fields["id"], name].select(&:present?).join(" - ")
   end
 end

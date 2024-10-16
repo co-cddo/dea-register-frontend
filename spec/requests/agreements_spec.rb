@@ -1,16 +1,16 @@
 require "rails_helper"
 
 RSpec.describe "Agreements", type: :request do
-  let(:fields) { { "Purpose" => Faker::Lorem.sentence } }
+  let(:fields) { { "purpose" => Faker::Lorem.sentence } }
   let!(:agreement) do
     create(
       :agreement,
       name: "A",
       fields: fields.merge(
-        ID: 2,
-        Start_date: to_json_date(6.days.ago),
-        End_date: to_json_date(3.days.ago),
-        ISA_status: "Completed",
+        id: 2,
+        start_date: to_json_date(6.days.ago),
+        end_date: to_json_date(3.days.ago),
+        isa_status: "Completed",
       ),
     )
   end
@@ -21,10 +21,10 @@ RSpec.describe "Agreements", type: :request do
         :agreement,
         name: "B",
         fields: {
-          ID: 1,
-          Start_date: to_json_date(5.days.ago),
-          End_date: to_json_date(1.day.ago),
-          ISA_status: "Completed",
+          id: 1,
+          start_date: to_json_date(5.days.ago),
+          end_date: to_json_date(1.day.ago),
+          isa_status: "Completed",
         },
       )
     end
@@ -33,10 +33,10 @@ RSpec.describe "Agreements", type: :request do
         :agreement,
         name: "C",
         fields: {
-          ID: 3,
-          Start_date: to_json_date(4.days.ago),
-          End_date: to_json_date(2.days.ago),
-          ISA_status: "Active",
+          id: 3,
+          start_date: to_json_date(4.days.ago),
+          end_date: to_json_date(2.days.ago),
+          isa_status: "Active",
         },
       )
     end
@@ -171,7 +171,7 @@ RSpec.describe "Agreements", type: :request do
 
     it "displays agreement fields" do
       get agreement_path(agreement)
-      expect(response.body).to include(fields["Purpose"])
+      expect(response.body).to include(fields["purpose"])
     end
   end
 end

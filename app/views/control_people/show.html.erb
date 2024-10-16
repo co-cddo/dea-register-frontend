@@ -2,6 +2,6 @@
 
 <h1 class="govuk-heading-l"><%= @control_person.name %></h1>
 
-<p class="govuk-body"><%= @control_person.fields['Name'] %><p>
+<p class="govuk-body"><%= @control_person.fields['description'] %><p>
 
 <%= render 'shared/associations', associations: { agreements: @control_person.agreements, powers: @control_person.powers } %>
