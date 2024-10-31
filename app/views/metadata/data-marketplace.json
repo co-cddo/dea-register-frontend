@@ -1,0 +1,28 @@
+{
+  "identifier": "https://www.digital-economy-act-register.data.gov.uk",
+  "supplierIdentifier": "https://www.digital-economy-act-register.data.gov.uk",
+  "modified": "2024-10-31T16:00:00+00:00",
+  "status": "Published",
+  "title": "Register of information sharing agreements under chapters 1, 2, 3 and 4 of part 5 of the Digital Economy Act 2017",
+  "description": "Register of information sharing agreements that have been made under the public service delivery, debt, fraud and civil registration provisions within the Digital Economy Act 2017.",
+  "type": "Data Service",
+  "apiType": "REST",
+  "serviceType": "Transactional",
+  "theme": [
+    "Government and public sector"
+  ],
+  "keyword": [],
+  "contactPoint": [
+    {
+      "name": "Data Sharing Legislation Team",
+      "email": "dea-data-sharing@digital.cabinet-office.gov.uk"
+    }
+  ],
+  "publisher": "central-digital-and-data-office",
+  "securityClassification": "OFFICIAL",
+  "accessRights": "OPEN",
+  "endpointDescription": "https://github.com/co-cddo/dea-register-frontend",
+  "endpointURL": "https://www.digital-economy-act-register.data.gov.uk",
+  "servesDataset": []
+}
+
