@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   resources :control_people, only: %i[index show], path: :controllers
   resources :search, only: [:index]
   resources :update_logs, only: [:index]
+  resources :metadata, only: [:show], constraints: { format: :json }
 end
