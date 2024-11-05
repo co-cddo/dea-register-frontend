@@ -3,7 +3,7 @@ class Agreement < DataTable
   self.rapid_table_name = :agreements
   self.rapid_name_field = :agreement_name
 
-  default_scope { order(Arel.sql("(fields ->> 'ID')::Integer")) }
+  default_scope { order(Arel.sql("CAST(record_id AS Integer)")) }
 
   has_many :power_agreements, dependent: :delete_all
   has_many :powers, through: :power_agreements

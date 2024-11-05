@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :data_table do
     name { Faker::Company.industry }
-    record_id { SecureRandom.uuid }
+    record_id { rand(1..100) }
     type { %w[Agreement Power ControlPerson].sample }
 
     # NOTE: DataTable is an abstract (STI) class

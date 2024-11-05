@@ -8,7 +8,7 @@ RSpec.describe Agreement, type: :model do
 
     context "with rAPId source" do
       let(:controller_name) { Faker::Name.name }
-      let(:id) { SecureRandom.uuid }
+      let(:id) { rand(0..1).to_s }
       let(:data) do
         {
           1 => {
