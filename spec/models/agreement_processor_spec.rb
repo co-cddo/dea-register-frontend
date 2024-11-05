@@ -14,6 +14,10 @@ RSpec.describe AgreementProcessor, type: :model do
         agreement
       end
 
+      before do
+        allow(Rails.configuration).to receive(:data_source).and_return(:airtable)
+      end
+
       it "creates a new instance" do
         expect { populate }.to change(described_class, :count).by(1)
       end
