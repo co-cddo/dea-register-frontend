@@ -3,7 +3,7 @@ shared_examples_for "is_data_table" do
     subject(:populate) { described_class.populate }
 
     let(:name) { Faker::Name.name }
-    let(:id) { SecureRandom.uuid }
+    let(:id) { rand(0..100).to_s }
 
     context "with rAPId source" do
       let(:data) do
@@ -113,7 +113,7 @@ shared_examples_for "is_data_table" do
 
         # A second call is then triggered and that needs to return a different set of data
         # As this is then the last set of data, it does not include an offset
-        let(:offset_id) { SecureRandom.uuid }
+        let(:offset_id) { rand(1..100).to_s }
         let(:offset_data) do
           {
             records: [{
