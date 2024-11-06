@@ -32,6 +32,43 @@ shared_examples_for "is_data_table" do
         expect(record.record_id).to eq(id)
         expect(record.fields["foo"]).to eq("bar")
       end
+
+      context "when contained dates are invalid" do
+        let(:data) do
+          {
+            id => {
+              id:,
+              described_class.rapid_name_field => name,
+              end_date: "invalid",
+            },
+          }
+        end
+
+        it "replaces invalid with null" do
+          populate
+          record = described_class.last
+          expect(record.fields["end_date"]).to be_nil
+        end
+      end
+
+      context "when contained dates are valid" do
+        let(:valid_date) { Faker::Date.in_date_period.to_s }
+        let(:data) do
+          {
+            id => {
+              id:,
+              described_class.rapid_name_field => name,
+              end_date: valid_date,
+            },
+          }
+        end
+
+        it "does not alter date entry" do
+          populate
+          record = described_class.last
+          expect(record.fields["end_date"]).to eq(valid_date)
+        end
+      end
     end
 
     context "with airtable source" do

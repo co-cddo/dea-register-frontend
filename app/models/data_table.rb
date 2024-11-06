@@ -40,7 +40,7 @@ class DataTable < ApplicationRecord
 
         instance.name = name.strip
 
-        instance.fields = record
+        instance.fields = SourceRecordCleaner.clean(record)
         instance.save!
         instance.id
       end
