@@ -39,7 +39,7 @@ RSpec.describe "/control_people", type: :request do
 
     it "displays control person" do
       get control_person_path(control_person)
-      expect(response.body).to include(control_person.name)
+      expect(response.body).to include(escape_html(control_person.name))
     end
 
     context "when power present" do
@@ -54,7 +54,7 @@ RSpec.describe "/control_people", type: :request do
 
       it "displays control person" do
         get control_person_path(control_person)
-        expect(response.body).to include(control_person.name)
+        expect(response.body).to include(escape_html(control_person.name))
       end
 
       it "displays a link to the power" do

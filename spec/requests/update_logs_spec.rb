@@ -6,7 +6,7 @@ RSpec.describe "UpdateLogs", type: :request do
 
     it "displays log" do
       get update_logs_path
-      expect(response.body).to include(update_log.comment)
+      expect(response.body).to include(escape_html(update_log.comment))
     end
   end
 end

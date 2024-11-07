@@ -171,7 +171,67 @@ RSpec.describe "Agreements", type: :request do
 
     it "displays agreement fields" do
       get agreement_path(agreement)
-      expect(response.body).to include(fields["purpose"])
+      expect(response.body).to include(escape_html(fields["purpose"]))
+    end
+  end
+
+  let(:json) { JSON.parse(response.body) }
+
+  describe "GET /agreements.json index" do
+    it "returns http success" do
+      get agreements_path(format: :json), as: :json
+      expect(response).to have_http_status(:success)
+    end
+
+    it "has agreements root with a JSON object" do
+      get agreements_path(format: :json), as: :json
+      expect(json.keys).to include("agreements")
+    end
+
+    it "displays agreement name" do
+      get agreements_path(format: :json), as: :json
+      expect(response.body).to include(escape_html(agreement.name))
+    end
+
+    it "displays path to agreement json show page" do
+      get agreements_path(format: :json), as: :json
+      expect(response.body).to include(agreement_path(agreement, format: :json))
+    end
+
+    it "show no links when only one agreement" do
+      get agreements_path(format: :json), as: :json
+      expect(json.dig("links", "next")).to be_blank
+      expect(json.dig("links", "previous")).to be_blank
+    end
+
+    context "when pages of data" do
+      let!(:agreements) { create_list :agreement, 30 }
+      it "display link to next page" do
+        get agreements_path(format: :json), as: :json
+        expect(json.dig("links", "next")).to include(agreements_path(format: :json, page: 2))
+      end
+
+      it "displays link to previous page after first page" do
+        get agreements_path(format: :json, page: 2), as: :json
+        expect(json.dig("links", "previous")).to include(agreements_path(format: :json))
+      end
+    end
+  end
+
+  describe "GET /agreements/:id.json show" do
+    it "returns http success" do
+      get agreement_path(agreement, format: :json), as: :json
+      expect(response).to have_http_status(:success)
+    end
+
+    it "displays data in fields" do
+      get agreement_path(agreement, format: :json), as: :json
+      expect(json.dig("agreement", "data")).to eq(agreement.fields)
+    end
+
+    it "includes the index json view path" do
+      get agreement_path(agreement, format: :json), as: :json
+      expect(json.dig("agreement", "links", "index")).to include(agreements_path(format: :json))
     end
   end
 end

@@ -62,8 +62,8 @@ gem "pagy", "~> 6.0"
 gem "faraday"
 
 # API
-gem 'rabl'
-gem 'oj' # JSON parser
+gem "oj" # JSON parser
+gem "rabl"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

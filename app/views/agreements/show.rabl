@@ -1,6 +1,6 @@
 object @agreement
 node(:data) do |agreement|
-  agreement.fields.except('agreement_name')
+  agreement.fields.except("agreement_name")
 end
 node(:links) do
   { index: Rails.application.routes.url_helpers.agreements_url(format: :json) }
