@@ -38,7 +38,7 @@ RSpec.describe "/processors", type: :request do
 
     it "displays processor name" do
       get processor_path(processor)
-      expect(response.body).to include(processor.name)
+      expect(response.body).to include(escape_html(processor.name))
     end
   end
 end

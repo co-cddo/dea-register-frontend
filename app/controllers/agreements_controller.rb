@@ -19,7 +19,7 @@ class AgreementsController < ApplicationController
   end
 
   def show
-    @agreement = Agreement.find(params[:id])
+    @agreement = Agreement.find_by(record_id: params[:id])
   end
 
 private

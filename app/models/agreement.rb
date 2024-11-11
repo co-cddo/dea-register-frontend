@@ -25,4 +25,8 @@ class Agreement < DataTable
   def id_and_name
     [fields["id"], name].select(&:present?).join(" - ")
   end
+
+  def to_param
+    record_id
+  end
 end

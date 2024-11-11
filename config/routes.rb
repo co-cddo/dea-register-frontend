@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   root "agreements#index"
 
   resources :agreements, only: [:show]
+  resources :agreements, only: %i[show index], constraints: { format: :json }
   resources :powers, only: %i[index show]
   resources :processors, only: %i[index show]
   resources :control_people, only: %i[index show], path: :controllers
