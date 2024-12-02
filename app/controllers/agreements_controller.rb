@@ -22,6 +22,15 @@ class AgreementsController < ApplicationController
     @agreement = Agreement.find_by(record_id: params[:id])
   end
 
+  def populate
+    if ENV["ALLOW_MANUAL_POPULATE"] == "true"
+      UpdateDataFromSource.call
+      redirect_to(root_path, notice: "Data update job queued. It will take 5-10 minutes for the process to complete")
+    else
+      redirect_to(root_path, alert: "Data update job disabled")
+    end
+  end
+
 private
 
   def sort_by

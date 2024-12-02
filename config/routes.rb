@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "agreements#index"
 
-  resources :agreements, only: [:show]
+  resources :agreements, only: [:show] do
+    post :populate, on: :collection
+  end
   resources :agreements, only: %i[show index], constraints: { format: :json }
   resources :powers, only: %i[index show]
   resources :processors, only: %i[index show]

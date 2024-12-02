@@ -234,4 +234,27 @@ RSpec.describe "Agreements", type: :request do
       expect(json.dig("agreement", "links", "index")).to include(agreements_path(format: :json))
     end
   end
+
+  describe "POST /agreements/populate" do
+    before do
+      ActiveJob::Base.queue_adapter = :test
+    end
+
+    it "does not trigger update and redirects to root" do
+      expect(UpdateDataFromSource).not_to receive(:call)
+      post populate_agreements_path
+      expect(response).to redirect_to(root_path)
+    end
+
+    context "with environment variable set" do
+      before do
+        allow(ENV).to receive(:[]).with("ALLOW_MANUAL_POPULATE").and_return("true")
+      end
+      it "triggers update and redirects to root" do
+        expect(UpdateDataFromSource).to receive(:call).and_return(true)
+        post populate_agreements_path
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
 end
