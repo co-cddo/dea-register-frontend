@@ -24,7 +24,7 @@ class AgreementsController < ApplicationController
 
   def populate
     if ENV["ALLOW_MANUAL_POPULATE"] == "true"
-      UpdateDataFromSource.call
+      UpdateDataJob.perform_later
       redirect_to(root_path, notice: "Data update job queued. It will take 5-10 minutes for the process to complete")
     else
       redirect_to(root_path, alert: "Data update job disabled")

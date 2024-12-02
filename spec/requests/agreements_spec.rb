@@ -241,8 +241,7 @@ RSpec.describe "Agreements", type: :request do
     end
 
     it "does not trigger update and redirects to root" do
-      expect(UpdateDataFromSource).not_to receive(:call)
-      post populate_agreements_path
+      expect { post(populate_agreements_path) }.not_to have_enqueued_job
       expect(response).to redirect_to(root_path)
     end
 
@@ -251,8 +250,8 @@ RSpec.describe "Agreements", type: :request do
         allow(ENV).to receive(:[]).with("ALLOW_MANUAL_POPULATE").and_return("true")
       end
       it "triggers update and redirects to root" do
-        expect(UpdateDataFromSource).to receive(:call).and_return(true)
-        post populate_agreements_path
+        expect { post(populate_agreements_path) }.to have_enqueued_job
+
         expect(response).to redirect_to(root_path)
       end
     end

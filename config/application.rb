@@ -23,5 +23,7 @@ module DeaRegisterFrontend
 
     # Data source options are :airtable and :rapid
     config.data_source = ENV.fetch("DATA_SOURCE", :rapid).to_sym
+
+    config.active_job.queue_adapter = :delayed_job
   end
 end
