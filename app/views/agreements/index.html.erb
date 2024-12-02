@@ -95,3 +95,5 @@
   <h2 class="govuk-heading-m">Records not found</h2>
   <p class="govuk-body">No records were found that match the current filter</p>
 <% end %>
+
+<%= govuk_button_to("Update data from source", populate_agreements_path, warning: true) if ENV["ALLOW_MANUAL_POPULATE"] == 'true' %>
