@@ -110,7 +110,7 @@ shared_examples_for "is_data_table" do
         record = described_class.last
         expect(record.name).to eq(name)
         expect(record.record_id).to eq(id)
-        expect(record.fields).to eq(fields.stringify_keys)
+        expect(record.fields["foo"]).to eq("bar")
       end
 
       context "when keys are not downcase" do

@@ -6,8 +6,12 @@ RSpec.describe Agreement, type: :model do
   describe ".populate" do # Note that most populate behavior is tested in the shared example 'is_data_table'
     subject(:populate) { described_class.populate }
 
-    context "with rAPId source" do
-      let(:controller_name) { Faker::Name.name }
+    before do
+      allow(Rails.configuration).to receive(:data_source).and_return(:rapid)
+      expect(RapidApi).to receive(:output_for).with(described_class.rapid_table_name).and_return(data)
+    end
+
+    context "with duplicate ids" do
       let(:id) { rand(0..1).to_s }
       let(:data) do
         {
@@ -24,11 +28,6 @@ RSpec.describe Agreement, type: :model do
         }
       end
 
-      before do
-        allow(Rails.configuration).to receive(:data_source).and_return(:rapid)
-        expect(RapidApi).to receive(:output_for).with(described_class.rapid_table_name).and_return(data)
-      end
-
       it "assumes id is unique and does not create duplicates" do
         expect { populate }.to change(described_class, :count).by(1)
       end
@@ -38,36 +37,49 @@ RSpec.describe Agreement, type: :model do
         expect(described_class.last.name).to eq("Bar")
       end
     end
-  end
 
-  # make sure a base exists to avoid callout for base
-  let!(:air_table_base) { create :air_table_base }
-  let(:base_id) { AirTableBase.base_id }
+    context "with dates" do
+      let(:data) do
+        {
+          1 => {
+            id: 1,
+            agreement_name: "Foo",
+            start_date: 3.days.ago.strftime("%Y-%m-%d"),
 
-  # There needs to be an air table table object to look up the table id
-  let!(:air_table_table) { create :air_table_table, name: described_class.air_table_name }
-  let(:table_id) { air_table_table.record_id }
+          },
+          2 => {
+            id: 2,
+            agreement_name: "Bar",
+            start_date: 3.days.ago.strftime("%Y-%m-%d"),
+            end_date: 2.days.ago.strftime("%Y-%m-%d"),
 
-  describe ".search" do
-    let!(:agreement) { create :agreement, name: "it is all foo bar" }
-    let!(:other) { create :agreement, name: "something else" }
-    let(:data) do
-      { records: [{ id: agreement.record_id }] }
-    end
-    let(:query) do
-      { "filterByFormula" => "SEARCH(\"foo\",{Name})" }
-    end
+          },
+          3 => {
+            id: 3,
+            agreement_name: "Other",
+            start_date: 3.days.ago.strftime("%Y-%m-%d"),
+            end_date: 2.days.from_now.strftime("%Y-%m-%d"),
+          },
+        }
+      end
 
-    before do
-      expect(AirTableApi).to receive(:data_for).with("#{base_id}/#{table_id}", query:).and_return(data)
-    end
+      it "sets status to active if no end date" do
+        populate
+        agreement = described_class.find_by_id!(1)
+        expect(agreement.fields["isa_status"]).to eq("Active")
+      end
 
-    it "returns records that match the query" do
-      expect(described_class.search("foo")).to include(agreement)
-    end
+      it "sets status to active if end date in past" do
+        populate
+        agreement = described_class.find_by_id!(2)
+        expect(agreement.fields["isa_status"]).to eq("Complete")
+      end
 
-    it "does not return records that do not match the query" do
-      expect(described_class.search("foo")).not_to include(other)
+      it "sets status to active if end date in future" do
+        populate
+        agreement = described_class.find_by_id!(3)
+        expect(agreement.fields["isa_status"]).to eq("Active")
+      end
     end
   end
 

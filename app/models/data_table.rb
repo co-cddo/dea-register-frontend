@@ -41,6 +41,7 @@ class DataTable < ApplicationRecord
         instance.name = name.strip
 
         instance.fields = SourceRecordCleaner.clean(record)
+        before_populate_save(instance)
         instance.save!
         instance.id
       end
@@ -48,12 +49,13 @@ class DataTable < ApplicationRecord
       where.not(id: ids_of_created).destroy_all
     end
 
-    def data_from_source
-      air_table_data_source? ? data_from_air_table : data_from_rapid
+    def before_populate_save(instance)
+      # By default do nothing
+      # Override in child classes to add modifications specific to that class
     end
 
-    def search(text)
-      search_via_air_table(text)
+    def data_from_source
+      air_table_data_source? ? data_from_air_table : data_from_rapid
     end
 
   private
