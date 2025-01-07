@@ -52,10 +52,6 @@ class DataTable < ApplicationRecord
       air_table_data_source? ? data_from_air_table : data_from_rapid
     end
 
-    def search(text)
-      search_via_air_table(text)
-    end
-
   private
 
     def is_draft?(record)
