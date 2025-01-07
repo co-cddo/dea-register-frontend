@@ -41,11 +41,17 @@ class DataTable < ApplicationRecord
         instance.name = name.strip
 
         instance.fields = SourceRecordCleaner.clean(record)
+        before_populate_save(instance)
         instance.save!
         instance.id
       end
       # Remove records that no longer match any on the source system(assume deleted)
       where.not(id: ids_of_created).destroy_all
+    end
+
+    def before_populate_save(instance)
+      # By default do nothing
+      # Override in child classes to add modifications specific to that class
     end
 
     def data_from_source

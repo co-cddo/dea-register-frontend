@@ -37,6 +37,50 @@ RSpec.describe Agreement, type: :model do
         expect(described_class.last.name).to eq("Bar")
       end
     end
+
+    context "with dates" do
+      let(:data) do
+        {
+          1 => {
+            id: 1,
+            agreement_name: "Foo",
+            start_date: 3.days.ago.strftime("%Y-%m-%d"),
+
+          },
+          2 => {
+            id: 2,
+            agreement_name: "Bar",
+            start_date: 3.days.ago.strftime("%Y-%m-%d"),
+            end_date: 2.days.ago.strftime("%Y-%m-%d"),
+
+          },
+          3 => {
+            id: 3,
+            agreement_name: "Other",
+            start_date: 3.days.ago.strftime("%Y-%m-%d"),
+            end_date: 2.days.from_now.strftime("%Y-%m-%d"),
+          },
+        }
+      end
+
+      it "sets status to active if no end date" do
+        populate
+        agreement = described_class.find_by_id!(1)
+        expect(agreement.fields["isa_status"]).to eq("Active")
+      end
+
+      it "sets status to active if end date in past" do
+        populate
+        agreement = described_class.find_by_id!(2)
+        expect(agreement.fields["isa_status"]).to eq("Complete")
+      end
+
+      it "sets status to active if end date in future" do
+        populate
+        agreement = described_class.find_by_id!(3)
+        expect(agreement.fields["isa_status"]).to eq("Active")
+      end
+    end
   end
 
   describe "#id_and_name" do
