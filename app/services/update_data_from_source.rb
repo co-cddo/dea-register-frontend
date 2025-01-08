@@ -9,7 +9,6 @@ class UpdateDataFromSource
       Processor,
       Power,
       PowerAgreement,
-      PowerControlPerson,
       AgreementControlPerson,
       AgreementProcessor,
     ]

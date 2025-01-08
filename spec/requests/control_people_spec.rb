@@ -41,26 +41,5 @@ RSpec.describe "/control_people", type: :request do
       get control_person_path(control_person)
       expect(response.body).to include(escape_html(control_person.name))
     end
-
-    context "when power present" do
-      let(:power_control_person) { create :power_control_person }
-      let(:control_person) { power_control_person.control_person }
-      let(:power) { power_control_person.power }
-
-      it "renders a successful response" do
-        get control_person_path(control_person)
-        expect(response).to have_http_status(:success)
-      end
-
-      it "displays control person" do
-        get control_person_path(control_person)
-        expect(response.body).to include(escape_html(control_person.name))
-      end
-
-      it "displays a link to the power" do
-        get control_person_path(control_person)
-        expect(response.body).to include(power_path(power))
-      end
-    end
   end
 end

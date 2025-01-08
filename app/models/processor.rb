@@ -1,5 +1,4 @@
 class Processor < DataTable
-  self.air_table_name = "Processors"
   self.rapid_table_name = :processors
   self.rapid_name_field = :processor_name
 
