@@ -1,5 +1,4 @@
 class Agreement < DataTable
-  self.air_table_name = "Information Sharing Agreements"
   self.rapid_table_name = :agreements
   self.rapid_name_field = :agreement_name
 

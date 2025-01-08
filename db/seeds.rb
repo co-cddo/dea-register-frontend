@@ -5,7 +5,7 @@
 #
 
 # rubocop:disable Rails/Output
-starting = "Seeding data from #{Rails.configuration.data_source}"
+starting = "Seeding data from source"
 puts starting # This is sent to STOUT to provide feedback when seeding run at console
 Rails.logger.debug starting
 

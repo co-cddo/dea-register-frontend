@@ -7,7 +7,6 @@ RSpec.describe Agreement, type: :model do
     subject(:populate) { described_class.populate }
 
     before do
-      allow(Rails.configuration).to receive(:data_source).and_return(:rapid)
       expect(RapidApi).to receive(:output_for).with(described_class.rapid_table_name).and_return(data)
     end
 

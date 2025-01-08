@@ -1,18 +1,17 @@
 # Classes that inherit from this one store data for each of the main data tables
 
-# For data held in Airtable, the table name used in Airtable will need to be defined
-# in the sub-classes. For example, if you want to store the data for an Airtable "Foo bar"
-# you can:
+# Subclasses of DataTable need to specify the name of the rAPId table the data
+# will be pulled from and which field contains the instance name:
 # ```
 #   class FooBar < DataTable
-#     self.air_table_name = 'Foo bar'
+#     self.rapid_table_name = :my_model
+#     self.rapid_name_field = :my_model_name
 #   end
 # ```
 #
 # With that in place, `FooBar.populate` will pull each of the records from the data source
 # and store them in the data_tables table with the type 'FooBar'.
 class DataTable < ApplicationRecord
-  extend AirtableDataSource
   extend RapidDataSource
 
   include PgSearch::Model
@@ -23,7 +22,7 @@ class DataTable < ApplicationRecord
   }
 
   class << self
-    attr_accessor :air_table_name, :rapid_table_name, :rapid_name_field
+    attr_accessor :rapid_table_name, :rapid_name_field
 
     def populate
       raise "Cannot run on root class - DataTable" if self == DataTable
@@ -55,7 +54,7 @@ class DataTable < ApplicationRecord
     end
 
     def data_from_source
-      air_table_data_source? ? data_from_air_table : data_from_rapid
+      data_from_rapid
     end
 
   private
