@@ -53,6 +53,18 @@ space so does not need to be run via delayed job.
 
 Searching is provided by the Postgres search tool PgSearch. See the Search Controller for details.
 
+### API
+
+The agreement data can be rendered as JSON. The entry point is /agreements.json. This is a list view that includes:
+
+- the name of each agreement listed
+- links to detailed views of each agreement listed
+
+The default index view is for the first 20 agreements. The root "links" element contains links to the next page (and previous page when present).
+
+The parameter "items" can be used in the URL to change the number of agreements listed. The parameter "page" defines the page number.
+For example, to display the fifth and sixth agreements use the url: /agreements.json?page=3&items=2
+
 ## Maintenance
 
 Before this application will run successfully locally, the following actions will be required:

@@ -216,6 +216,19 @@ RSpec.describe "Agreements", type: :request do
         expect(json.dig("links", "previous")).to include(agreements_path(format: :json))
       end
     end
+
+    context "with number of items specified" do
+      let!(:agreements) { create_list :agreement, 3 }
+      it "does not display third items in first page if 2 items specified" do
+        get agreements_path(format: :json, items: 2), as: :json
+        expect(json["agreements"].length).to eq(2)
+      end
+
+      it "updates the links to include items param" do
+        get agreements_path(format: :json, items: 2), as: :json
+        expect(json.dig("links", "next")).to include(agreements_path(format: :json, items: 2))
+      end
+    end
   end
 
   describe "GET /agreements/:id.json show" do
