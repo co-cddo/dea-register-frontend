@@ -15,7 +15,7 @@ class AgreementsController < ApplicationController
     # Using unscoped would break the `control_person.agreements` association
     agreements = agreements.reorder(sort_by => direction)
 
-    @pagy, @agreements = pagy(agreements)
+    @pagy, @agreements = pagy(agreements, items: params[:items], max_items: Agreement.count)
   end
 
   def show
